@@ -1,10 +1,10 @@
-# 🧾 Sistema de Gestión de Ventas y Compras "Café el Mejor"
+# ☕ Sistema de Gestión de Ventas y Compras "Café el Mejor"
 
 Este es un sistema de gestión web construido con **Next.js 15**, **JavaScript** y **Tailwind CSS**, para administrar productos, clientes, facturas, órdenes de compra, cobranzas y proveedores.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - [Next.js 15.6.2](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
