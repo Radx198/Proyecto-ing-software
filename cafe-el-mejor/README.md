@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧾 Sistema de Gestión de Ventas y Compras "Café el Mejor"
 
-## Getting Started
+Este es un sistema de gestión web construido con **Next.js 15**, **JavaScript** y **Tailwind CSS**, para administrar productos, clientes, facturas, órdenes de compra, cobranzas y proveedores.
 
-First, run the development server:
+---
+
+## 🚀 Tecnologías utilizadas
+
+- [Next.js 15.6.2](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- JavaScript
+- Local Storage
+- UUID para generación de IDs
+- Rutas protegidas con AuthGuard
+
+---
+
+## Requisitos previos
+
+- Node.js >= 18
+- npm o yarn
+
+---
+
+## Instalación
+
+1. Clonar el repo:
+
+```bash
+git clone https://github.com/Radx198/Proyecto-ing-software
+cd cafe-el-mejor
+```
+## Entorno de desarrollo
+
+2. Para levantar el entorno ejecutar:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Deberías poder navegar por el proyecto en: http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Acceso
+La autentificación está simulada y los usuarios estan hardcodeados en /data/usuarios.json
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+admin → acceso completo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+usuario: admin
 
-## Learn More
+contraseña: admin123
 
-To learn more about Next.js, take a look at the following resources:
+cliente → acceso limitado (por implementar)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades ya implementadas
+Autenticación
+Simulado
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+AuthGuard: usado como wrapper para proteger las rutas.
 
-## Deploy on Vercel
+Productos
+CRUD
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Clientes
+CRUD
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Funcionalidades pendientes por implementar
+🧾 Facturas
+- [ ]  CRUD
+- [ ]  Listado y filtros
+
+💳 Cobranzas
+ Registro con método de pago, cliente y producto
+- [ ]  CRUD con metodo de pago
+- [ ]  Listado y filtros
+
+📑 Órdenes de compra
+- [ ]  CRUD con metodo de pago
+- [ ]  Listado y filtros
+
+🚚 Proveedores
+- [ ]  CRUD con metodo de pago
+- [ ]  Listado y filtros
+
+🛡 Acceso por rol (parte del cliente)
+- [ ]  Definir vistas y permisos específicos para usuarios tipo cliente
+
+📁 Estructura del proyecto
+
+```bash
+/app/
+├── login/
+    ├── page.js
+├── productos/
+    ├── page.js
+    ├── nuevo/
+        ├── page.js
+    ├── [id]/
+        ├── editar/
+            ├── page.js
+├── clientes/
+    ├── page.js
+    ├── nuevo/
+        ├── page.js
+    ├── [id]/
+        ├── editar/
+            ├── page.js
+├── dashboard/
+    ├── admin/
+        ├── page.js
+    ├── cliente/
+        ├── page.js
+├── unauthorized/
+    ├── page.js
+├── layout.jsx
+/components/
+├── AuthGuard.jsx
+├── ProductoForm.jsx
+├── ClienteForm.jsx
+├── Sidebar.jsx
+/utils/
+├── productos.js
+├── clientes.js
+├── auth.js
+├── storage.js
+```
