@@ -35,6 +35,7 @@ cd cafe-el-mejor
 2. Para levantar el entorno ejecutar:
 
 ```bash
+npm i
 npm run dev
 ```
 Deberías poder navegar por el proyecto en: http://localhost:3000
