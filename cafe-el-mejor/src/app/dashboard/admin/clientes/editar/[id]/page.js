@@ -1,32 +1,54 @@
 'use client';
-
-import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getClienteById, updateCliente } from '@/utils/clientes';
-import ClienteForm from '@/components/ClienteForm';
+import { useRouter, useParams } from 'next/navigation';
 
-export default function EditarClientePage() {
+export default function EditarCliente() {
   const { id } = useParams();
   const router = useRouter();
-  const [cliente, setCliente] = useState(null);
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', direccion: '' });
 
   useEffect(() => {
-    const data = getClienteById(id);
-    if (!data) return router.push('/clientes');
-    setCliente(data);
+    async function fetchCliente() {
+      const res = await fetch(`/api/clientes/${id}`);
+      const data = await res.json();
+      setForm(data);
+    }
+    if (id) fetchCliente();
   }, [id]);
 
-  const handleSubmit = (data) => {
-    updateCliente(id, data);
-    router.push('/dashboard/admin/clientes');
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  if (!cliente) return null;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    await fetch(`/api/clientes/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    router.push('/clientes');
+  };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Editar Cliente</h1>
-      <ClienteForm initialData={cliente} onSubmit={handleSubmit} />
-    </div>
+    <main className="p-4 max-w-xl mx-auto">
+      <h1 className="text-xl font-bold mb-4">Editar Cliente</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {['nombre', 'apellido', 'email', 'telefono', 'direccion'].map(field => (
+          <input
+            key={field}
+            name={field}
+            type="text"
+            placeholder={field}
+            value={form[field]}
+            onChange={handleChange}
+            required={['nombre', 'apellido', 'email'].includes(field)}
+            className="w-full p-2 border rounded"
+          />
+        ))}
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
+      </form>
+    </main>
   );
 }
