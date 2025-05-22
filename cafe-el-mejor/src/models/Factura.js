@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 
-const CobranzaSchema = new mongoose.Schema({
+const FacturaSchema = new mongoose.Schema({
   identificacion: { type: String, required: true },
   metodoPago: { type: String, required: true },
   cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
-  productos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
   fecha: { type: Date, required: true },
   monto: { type: Number, required: true }
 }, {
   timestamps: true,
 });
 
-export default mongoose.models.Cobranza || mongoose.model('Cobranza', CobranzaSchema);
+export default mongoose.models.Factura || mongoose.model('Factura', FacturaSchema);

@@ -6,10 +6,10 @@ export default function CobranzasPage() {
   const { cobranzas, loading, deleteCobranza } = useCobranzas();
 
   return (
-    <main className="p-4 max-w-3xl mx-auto">
+    <main className="p-4 max-w-3xl mx-auto flex-1">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">Cobranzas</h1>
-        <Link href="/cobranzas/nueva" className="bg-green-600 text-white px-4 py-2 rounded">Nueva</Link>
+        <Link href="cobranzas/nueva" className="bg-darkgreen text-white px-4 py-2 rounded">Registrar Cobranza</Link>
       </div>
 
       {loading ? <p>Cargando...</p> : (

@@ -1,44 +1,65 @@
 'use client';
-
-import AddIcon from '@mui/icons-material/Add';
-import { getOrdenes, eliminarOrden } from '@/utils/ordenes';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useOrdenes } from '@/hooks/useOrdenes';
 
 export default function page() {
-  const [ordenes, setOrdenes] = useState([]);
-
-  useEffect(() => {
-    setOrdenes(getOrdenes());
-  }, []);
-
-  const handleDelete = (id) => {
-    eliminarOrden(id);
-    setOrdenes(getOrdenes());
-  };
+  const { ordenes, loading, deleteOrden } = useOrdenes();
 
   return (
-    <div className="p-4 flex-1">
-      <div className="flex justify-between mb-4">
+    <main className="p-4 max-w-5xl mx-auto flex-1">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">Órdenes de Compra</h1>
-        <Link href="ordenes/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">Nueva Orden <AddIcon /></Link>
+        <Link href="ordenes/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">Registrar Orden</Link>
       </div>
-      <ul className="space-y-2">
-        {ordenes.map((orden) => (
-          <li key={orden.id} className="border p-4 rounded shadow-sm">
-            <p><strong>Cliente:</strong> {orden.cliente}</p>
-            <p><strong>Productos:</strong> {orden.productos}</p>
-            <p><strong>Método de pago:</strong> {orden.metodoPago}</p>
-            <p><strong>Total:</strong> ${orden.precioTotal}</p>
-            <div className="mt-2 space-x-2">
-              <Link href={`/ordenes/editar/${orden.id}`} className="text-blue-600 underline">Editar</Link>
-              <button onClick={() => handleDelete(orden.id)} className="text-red-600 underline">
-                Eliminar
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <table className="w-full border text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-2">Orden N°</th>
+              <th className="p-2">Productos</th>
+              <th className="p-2">Cliente</th>
+              <th className="p-2">Método de Pago</th>
+              <th className="p-2">Precio Total</th>
+              <th className="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ordenes.map((orden, index) => (
+              <tr key={orden._id} className="border-t">
+                <td className="p-2 text-center">{index + 1}</td>
+
+                <td className="p-2">
+                  <ul className="list-disc ml-4">
+                    {orden.productos.map((item, i) => (
+                      <li key={i}>
+                        {item.producto?.nombre || 'Producto eliminado'} x {item.cantidad}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+
+                <td className="p-2">
+                  {orden.cliente?.nombre} {orden.cliente?.apellido}
+                  <br />
+                  <span className="text-gray-600 text-xs">{orden.cliente?.email}</span>
+                </td>
+
+                <td className="p-2 capitalize">{orden.metodoDePago}</td>
+
+                <td className="p-2">${orden.precioTotal.toFixed(2)}</td>
+
+                <td className="p-2 space-x-2">
+                  <Link href={`/ordenes/editar/${orden._id}`} className="text-blue-600 underline">Editar</Link>
+                  <button onClick={() => deleteOrden(orden._id)} className="text-red-600">Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </main>
   );
 }
