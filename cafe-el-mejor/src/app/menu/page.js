@@ -1,28 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import Footer from "@/components/Footer";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Header from "@/components/Header";
 
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
-      <header className="w-full px-6 py-4 shadow-lg">
-        <div className="flex max-w-6xl m-auto justify-between items-center  ">
-          <div className="flex max-w-6xl items-center gap-4">
-            <Image src="/logo.png" className="w-16 h-16" alt="Starbucks Logo" width={1024} height={1024} />
-            <nav className="flex gap-4 font-semibold">
-              <Link href="#">MENU</Link>
-              <Link href="#">CAFÉ</Link>
-              <Link href="#">EXPERIENCIA CAFÉ EL MEJOR</Link>
-            </nav>
-          </div>
-          <div className="">
-            <Link href="#" className="flex items-center gap-1">
-              <LocationOnIcon /> Localizar Tienda
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
       <section className="max-w-6xl bg-[#885542] m-auto text-white text-center flex items-center justify-center">
         <div className="flex justify-center flex-1">
           <Image src="/productos.jpg" alt="Productos" width={1332} height={777} />
