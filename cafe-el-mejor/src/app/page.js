@@ -31,8 +31,8 @@ export default function Home() {
         <div className="flex-1">
           <h3 className="text-2xl font-bold ">Ingresar al portal de administración</h3>
           <p className="mt-2 text-sm">Unite a mejorar la venta de café</p>
-          <div className="max-w-32 m-auto mt-4 px-4 py-2 border border-[#1e3932] rounded-full text-sm hover:bg-[#1e3932] hover:text-white transition">
-            <Link href="/login">
+          <div className="max-w-32 m-auto mt-4 text-sm ">
+            <Link className="hover:bg-[#1e3932] rounded-full  hover:text-white transition px-4 py-2 border border-[#1e3932] " href="/login">
               Iniciar sesión
             </Link>
           </div>
