@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/utils/auth';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -24,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
         <h2 className="text-xl font-bold mb-4">Iniciar Sesión</h2>
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
@@ -42,7 +43,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full mb-4 p-2 border rounded"
         />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full">
+        <button type="submit" className="bg-darkgreen text-white px-4 py-2 rounded w-full">
           Ingresar
         </button>
       </form>

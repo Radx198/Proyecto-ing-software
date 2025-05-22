@@ -1,4 +1,6 @@
 'use client';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+
 
 import Link from 'next/link';
 import { getSession, logoutUser } from '@/utils/auth';
@@ -46,7 +48,7 @@ export default function Sidebar() {
   if (!role) return null; // Previene renderizado mientras detecta la sesión
 
   return (
-    <aside className="w-64 h-screen bg-gray-800 text-white p-4 flex flex-col justify-between">
+    <aside className="w-64 h-screen bg-darkgreen text-white p-4 flex flex-col justify-between">
       <div>
         <h2 className="text-2xl font-bold mb-4">Panel {role}</h2>
         <ul>
@@ -61,9 +63,10 @@ export default function Sidebar() {
       </div>
       <button
         onClick={handleLogout}
-        className="bg-red-600 px-4 py-2 rounded hover:bg-red-700 mt-4"
+        className="bg-neutral-950 flex items-center justify-center px-4 py-2 rounded hover:bg-red-700 mt-4"
       >
         Cerrar sesión
+        <ExitToAppIcon className='ml-3'/>
       </button>
     </aside>
   );

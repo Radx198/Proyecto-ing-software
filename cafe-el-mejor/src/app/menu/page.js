@@ -1,32 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProductContainer from "@/components/menu/ProductContainer";
 
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
       <Header />
-      <section className="max-w-6xl bg-[#885542] m-auto text-white text-center flex items-center justify-center">
-        <div className="flex justify-center flex-1">
-          <Image src="/productos.jpg" alt="Productos" width={1332} height={777} />
-        </div>
-        <h2 className="text-3xl font-bold flex-1">CONECCIÓN DE CHOCOLATE Y MACADAMIA</h2>
+      <section className="max-w-6xl m-auto text-xl py-6">
+        <h2 className="font-semibold">
+          ¡Disfrutalos!
+        </h2>
+        <h1 className="font-bold text-3xl max-w-xl">
+          Conoce nuestras bebidas y alimentos de temporada
+        </h1>
       </section>
-      <section className="mt-8 bg-[#d6ede1] text-[#01754a] flex justify-center m-auto max-w-6xl items-center py-16 px-6 text-center">
-        <div className="flex-1">
-          <h3 className="text-2xl font-bold ">Ingresar al portal de administración</h3>
-          <p className="mt-2 text-sm">Unite a mejorar la venta de café</p>
-          <div className="max-w-32 m-auto mt-4 text-sm ">
-            <Link className="hover:bg-[#1e3932] rounded-full  hover:text-white transition px-4 py-2 border border-[#1e3932] " href="/login">
-              Iniciar sesión
-            </Link>
-          </div>
-        </div>
-        <div className="flex-1">
-          <Image src="/barista.png" alt="Recruitment" width={600} height={704} />
-        </div>
+      <section className="m-auto w-full max-w-6xl border-b border-t py-4 mb-6 border-neutral-400">
+        <h3 className="font-semibold text-xl">Bebidas</h3>
+      </section>
+      <section className="max-w-6xl m-auto grid xl:grid-cols-3 grid-cols-2 gap-8 place-items-center">
+        <ProductContainer alt="Flat white" src="/products/2022-03_Flat White 425x425 sin fondo.png" productName="Flat White" />
+        <ProductContainer alt="Flat white" src="/products/2022-03_Flat White 425x425 sin fondo.png" productName="Flat White" />
+        <ProductContainer alt="Flat white" src="/products/2022-03_Flat White 425x425 sin fondo.png" productName="Flat White" />
+        <ProductContainer alt="Flat white" src="/products/2022-03_Flat White 425x425 sin fondo.png" productName="Flat White" />
       </section>
       <Footer />
     </div>
