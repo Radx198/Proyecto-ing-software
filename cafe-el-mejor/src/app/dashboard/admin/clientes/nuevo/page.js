@@ -10,7 +10,7 @@ export default function NuevoClientePage() {
 
   const handleSubmit = (data) => {
     addCliente({ ...data, id: uuidv4() });
-    router.push('/clientes');
+    router.push('/dashboard/admin/clientes');
   };
 
   return (

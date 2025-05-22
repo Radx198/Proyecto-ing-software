@@ -12,13 +12,13 @@ export default function EditarProductoPage() {
 
   useEffect(() => {
     const p = getProductoById(params.id);
-    if (!p) return router.push('/productos');
+    if (!p) return router.push('/dasboard/admin/productos');
     setProducto(p);
   }, [params.id]);
 
   const handleSubmit = (data) => {
     updateProducto(params.id, data);
-    router.push('/productos');
+    router.push('dashboard/admin/productos');
   };
 
   if (!producto) return null;

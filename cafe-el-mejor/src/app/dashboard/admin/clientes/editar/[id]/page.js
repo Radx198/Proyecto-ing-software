@@ -18,7 +18,7 @@ export default function EditarClientePage() {
 
   const handleSubmit = (data) => {
     updateCliente(id, data);
-    router.push('/clientes');
+    router.push('/dashboard/admin/clientes');
   };
 
   if (!cliente) return null;

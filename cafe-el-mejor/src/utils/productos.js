@@ -1,5 +1,3 @@
-// utils/productos.js
-
 const STORAGE_KEY = 'productos';
 
 export function getProductos() {

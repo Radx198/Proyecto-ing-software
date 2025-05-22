@@ -1,5 +1,6 @@
 'use client';
 
+import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getProductos, deleteProducto } from '@/utils/productos';
@@ -22,10 +23,10 @@ export default function ProductosPage() {
   );
 
   return (
-    <div className="p-6">
+    <div className="p-6 flex-1">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Productos</h1>
-        <Link href="/productos/nuevo" className="bg-green-600 text-white px-4 py-2 rounded">Nuevo</Link>
+        <Link href="productos/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">Nuevo <AddIcon /></Link>
       </div>
 
       <input

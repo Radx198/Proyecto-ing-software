@@ -30,12 +30,12 @@ export default function Sidebar() {
   ];
 
   const adminLinks = [
-    { name: 'Productos', href: '/productos' },
-    { name: 'Clientes', href: '/clientes' },
-    { name: 'Facturas', href: '/facturas' },
-    { name: 'Cobranzas', href: '/cobranzas' },
-    { name: 'Órdenes', href: '/ordenes' },
-    { name: 'Proveedores', href: '/proveedores' },
+    { name: 'Productos', href: '/dashboard/admin/productos' },
+    { name: 'Clientes', href: '/dashboard/admin/clientes' },
+    { name: 'Facturas', href: '/dashboard/admin/facturas' },
+    { name: 'Cobranzas', href: '/dashboard/admin/cobranzas' },
+    { name: 'Órdenes', href: '/dashboard/admin/ordenes' },
+    { name: 'Proveedores', href: '/dashboard/admin/proveedores' },
   ];
 
   const clienteLinks = [
