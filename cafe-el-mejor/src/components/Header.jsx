@@ -17,8 +17,8 @@ export default function Header() {
           </nav>
         </div>
         <div className="">
-          <Link href="#" className="flex items-center gap-1">
-            <LocationOnIcon /> Localizar Tienda
+          <Link href="/login" className="flex items-center gap-1">
+            Iniciar sesión
           </Link>
         </div>
       </div>
