@@ -34,7 +34,12 @@ cd cafe-el-mejor
 ```
 ## Entorno de desarrollo
 
-2. Para levantar el entorno ejecutar:
+2. Crear un archivo .env.local:
+
+```.env.local
+MONGODB_URI="URI_MONGODB"
+```
+3. Para levantar el entorno ejecutar:
 
 ```bash
 npm i
