@@ -4,7 +4,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
-      {/* Header */}
       <header className="w-full px-6 py-4 shadow-lg">
         <div className="flex max-w-6xl m-auto justify-between items-center  ">
           <div className="flex max-w-6xl items-center gap-4">
@@ -22,16 +21,12 @@ export default function Home() {
           </div>
         </div>
       </header>
-
-      {/* Banner */}
       <section className="max-w-6xl bg-[#885542] m-auto text-white text-center flex items-center justify-center">
         <div className="flex justify-center flex-1">
           <Image src="/productos.jpg" alt="Productos" width={1332} height={777} />
         </div>
         <h2 className="text-3xl font-bold flex-1">CONECCIÓN DE CHOCOLATE Y MACADAMIA</h2>
       </section>
-
-      {/* Reclutamiento */}
       <section className="mt-8 bg-[#d6ede1] text-[#01754a] flex justify-center m-auto max-w-6xl items-center py-16 px-6 text-center">
         <div className="flex-1">
           <h3 className="text-2xl font-bold ">Ingresar al portal de administración</h3>
@@ -46,8 +41,6 @@ export default function Home() {
           <Image src="/barista.png" alt="Recruitment" width={600} height={704} />
         </div>
       </section>
-
-      {/* Footer */}
       <footer className="bg-gray-100 px-6 py-10 text-sm text-gray-700 grid grid-cols-2 md:grid-cols-4 gap-6">
         <div>
           <h4 className="font-semibold mb-2">Sobre nosotros</h4>
