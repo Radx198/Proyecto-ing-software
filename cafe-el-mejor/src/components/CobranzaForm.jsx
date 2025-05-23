@@ -1,26 +1,121 @@
 'use client';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 
 export default function CobranzaForm({ initialData = null, onSubmit }) {
-  const [identificacion, setIdentificacion] = useState(initialData?.identificacion || '');
-  const [metodoPago, setMetodoPago] = useState(initialData?.metodoPago || '');
-  const [producto, setProducto] = useState(initialData?.producto || '');
+  const [clientes, setClientes] = useState([]);
+  const [productosDisponibles, setProductosDisponibles] = useState([]);
   const [cliente, setCliente] = useState(initialData?.cliente || '');
-  const [fecha, setFecha] = useState(initialData?.fecha || '');
+  const [productos, setProductos] = useState(initialData?.productos || []);
+  const [metodoDePago, setMetodoDePago] = useState(initialData?.metodoDePago || '');
+  const [fecha, setFecha] = useState(Date.now());
+  const [monto, setMonto] = useState(0);
+
+  useEffect(() => {
+    fetch('/api/clientes')
+      .then(res => res.json())
+      .then(data => setClientes(data));
+
+    fetch('/api/productos')
+      .then(res => res.json())
+      .then(data => setProductosDisponibles(data));
+  }, []);
+
+  useEffect(() => {
+    const total = productos.reduce((acc, item) => {
+      const prod = productosDisponibles.find(p => p._id === item.producto);
+      return acc + (prod ? prod.precio * item.cantidad : 0);
+    }, 0);
+    setMonto(total);
+  }, [productos, productosDisponibles]);
+
+  const handleAgregarProducto = () => {
+    setProductos([...productos, { producto: '', cantidad: 1 }]);
+  };
+
+  const handleProductoChange = (index, field, value) => {
+    const nuevos = [...productos];
+    nuevos[index][field] = field === 'cantidad' ? parseInt(value) : value;
+    setProductos(nuevos);
+  };
+
+  const handleEliminarProducto = (index) => {
+    const nuevos = [...productos];
+    nuevos.splice(index, 1);
+    setProductos(nuevos);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ identificacion, metodoPago, producto, cliente, fecha });
+    onSubmit({ cliente, productos, metodoDePago, fecha, monto });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <input type="text" placeholder="Identificación" className="input" value={identificacion} onChange={(e) => setIdentificacion(e.target.value)} required />
-      <input type="text" placeholder="Método de pago" className="input" value={metodoPago} onChange={(e) => setMetodoPago(e.target.value)} required />
-      <input type="text" placeholder="Producto" className="input" value={producto} onChange={(e) => setProducto(e.target.value)} required />
-      <input type="text" placeholder="Cliente" className="input" value={cliente} onChange={(e) => setCliente(e.target.value)} required />
-      <input type="date" className="input" value={fecha} onChange={(e) => setFecha(e.target.value)} />
-      <button type="submit" className="btn-primary">Guardar Cobranza</button>
+      <select
+        className="w-full p-2 border rounded"
+        value={cliente}
+        onChange={(e) => setCliente(e.target.value)}
+        required
+      >
+        <option value="">Seleccionar Cliente</option>
+        {clientes.map(c => (
+          <option key={c._id} value={c._id}>
+            {c.nombre} {c.apellido} - {c.email}
+          </option>
+        ))}
+      </select>
+
+      <div className="space-y-2">
+        {productos.map((item, index) => (
+          <div key={index} className="flex gap-2">
+            <select
+              className="flex-1 p-2 border rounded"
+              value={item.producto}
+              onChange={(e) => handleProductoChange(index, 'producto', e.target.value)}
+              required
+            >
+              <option value="">Producto</option>
+              {productosDisponibles.map(p => (
+                <option key={p._id} value={p._id}>
+                  {p.nombre} (${p.precio})
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              min={1}
+              className="w-20 p-2 border rounded"
+              value={item.cantidad}
+              onChange={(e) => handleProductoChange(index, 'cantidad', e.target.value)}
+              required
+            />
+            <button type="button" onClick={() => handleEliminarProducto(index)} className="text-red-500 font-bold">
+              ×
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAgregarProducto} className="text-blue-600 underline text-sm">
+          + Agregar producto
+        </button>
+      </div>
+
+      <input
+        type="text"
+        placeholder="Método de pago"
+        className="w-full p-2 border rounded"
+        value={metodoDePago}
+        onChange={(e) => setMetodoDePago(e.target.value)}
+        required
+      />
+
+      <div className="w-full p-2 border rounded bg-gray-50">
+        <strong>Monto:</strong> ${monto.toFixed(2)}
+      </div>
+
+      <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+        Registrar Cobranza
+      </button>
     </form>
   );
 }

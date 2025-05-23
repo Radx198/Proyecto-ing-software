@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useOrdenes } from '@/hooks/useOrdenes';
 
-export default function page() {
+export default function Page() {
   const { ordenes, loading, deleteOrden } = useOrdenes();
 
   return (

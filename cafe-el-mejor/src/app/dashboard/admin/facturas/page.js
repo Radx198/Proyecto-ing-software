@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
 
 export default function Page() {
-  const { facturas, loading, deleteOrden } = useFacturas();
+  const { facturas, loading, deleteFactura } = useFacturas();
 
   return (
     <main className="p-4 max-w-5xl mx-auto flex-1">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">Órdenes de Compra</h1>
-        <Link href="facturas/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">Registrar Orden</Link>
+        <h1 className="text-xl font-bold">Facturas</h1>
+        <Link href="facturas/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">Registrar Factura</Link>
       </div>
 
       {loading ? (
@@ -45,7 +45,7 @@ export default function Page() {
 
                 <td className="p-2 space-x-2">
                   <Link href={`/facturas/editar/${factura._id}`} className="text-blue-600 underline">Editar</Link>
-                  <button onClick={() => deleteOrden(factura._id)} className="text-red-600">Eliminar</button>
+                  <button onClick={() => deleteFactura(factura._id)} className="text-red-600">Eliminar</button>
                 </td>
               </tr>
             ))}

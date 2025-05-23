@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useProductos } from '@/hooks/useProductos';
 
-export default function ProductosPage() {
+export default function Page() {
   const { productos, loading, deleteProducto } = useProductos();
 
   return (

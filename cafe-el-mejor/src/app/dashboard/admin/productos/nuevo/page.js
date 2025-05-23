@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function NuevoProducto() {
+export default function Page() {
   const [form, setForm] = useState({ nombre: '', descripcion: '', precio: '', stock: '', categoria: '' });
   const router = useRouter();
 
@@ -18,7 +18,7 @@ export default function NuevoProducto() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...form, precio: parseFloat(form.precio), stock: parseInt(form.stock) }),
     });
-    router.push('/productos');
+    router.push('/dashboard/admin/productos');
   };
 
   return (

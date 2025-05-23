@@ -2,14 +2,14 @@
 import Link from 'next/link';
 import { useClientes } from '@/hooks/useClientes';
 
-export default function ClientesPage() {
+export default function Page() {
   const { clientes, loading, deleteCliente } = useClientes();
 
   return (
     <main className="p-4 max-w-5xl mx-auto flex-1">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">Clientes</h1>
-        <Link href="/clientes/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">
+        <Link href="clientes/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">
           Registrar Cliente
         </Link>
       </div>

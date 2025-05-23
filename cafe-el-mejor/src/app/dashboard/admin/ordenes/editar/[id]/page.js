@@ -5,7 +5,7 @@ import { getOrdenPorId, actualizarOrden } from '@/utils/ordenes';
 import OrdenForm from '@/components/OrdenForm';
 import { useEffect, useState } from 'react';
 
-export default function page() {
+export default function Page() {
   const { id } = useParams();
   const router = useRouter();
   const [orden, setOrden] = useState(null);

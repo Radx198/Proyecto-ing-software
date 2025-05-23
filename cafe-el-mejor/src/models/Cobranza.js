@@ -1,10 +1,18 @@
 import mongoose from 'mongoose';
 
 const CobranzaSchema = new mongoose.Schema({
-  identificacion: { type: String, required: true },
-  metodoPago: { type: String, required: true },
+  metodoDePago: {
+    type: String,
+    enum: ['efectivo', 'tarjeta', 'transferencia', 'mercadoPago'],
+    required: true
+  },
   cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
-  productos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
+  productos: [
+    {
+      producto: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto', required: true },
+      cantidad: { type: Number, required: true },
+    }
+  ],
   fecha: { type: Date, required: true },
   monto: { type: Number, required: true }
 }, {

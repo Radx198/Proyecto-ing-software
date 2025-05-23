@@ -46,9 +46,13 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (productos.length === 0) {
+      alert('Debe agregar al menos un producto.');
+      return;
+    }
     onSubmit({ cliente, productos, metodoDePago, precioTotal });
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <select

@@ -18,7 +18,7 @@ export default function NuevoCliente() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-    router.push('/clientes');
+    router.push('/dashboard/admin/clientes');
   };
 
   return (

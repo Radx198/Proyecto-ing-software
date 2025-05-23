@@ -17,7 +17,7 @@ export default function AuthGuard({ children, allowedRoles = [] }) {
     }
 
     if (allowedRoles.length && !allowedRoles.includes(session.role)) {
-      router.push('/unauthorized'); // Podés crear una vista para esto
+      router.push('/unauthorized');
       return;
     }
 
