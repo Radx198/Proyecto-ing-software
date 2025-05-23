@@ -42,7 +42,6 @@ export default function RegistroPage() {
     }
 
     try {
-      // Crear usuario
       const res = await fetch('/api/usuarios', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
