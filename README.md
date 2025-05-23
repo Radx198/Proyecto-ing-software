@@ -65,19 +65,20 @@ Simulado
 AuthGuard: usado como wrapper para proteger las rutas.
 
 Productos
-- [x]  CRUD con metodo de pago
+- [x]  CRUD
 - [x]  Listado
 - [ ]  Filtros
 
 Clientes
-- [x]  CRUD con metodo de pago
+- [x]  CRUD
 - [x]  Listado
 - [ ]  Filtros
 
 ## Funcionalidades pendientes por implementar
 🧾 Facturas
-- [ ]  CRUD
-- [ ]  Listado y filtros
+- [x]  CRUD
+- [x]  Listado
+- [ ]  Filtros
 
 💳 Cobranzas
  Registro con método de pago, cliente y producto
@@ -86,12 +87,14 @@ Clientes
 - [ ]  Filtros
 
 📑 Órdenes de compra
-- [ ]  CRUD con metodo de pago
-- [ ]  Listado y filtros
+- [x]  CRUD
+- [x]  Listado
+- [ ]  Filtros
 
 🚚 Proveedores
-- [ ]  CRUD con metodo de pago
-- [ ]  Listado y filtros
+- [x]  CRUD con metodo de pago
+- [x]  Listado
+- [ ]  Filtros
 
 🛡 Acceso por rol (parte del cliente)
 - [ ]  Definir vistas y permisos específicos para usuarios tipo cliente
