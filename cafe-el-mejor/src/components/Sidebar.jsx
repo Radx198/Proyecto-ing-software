@@ -46,13 +46,13 @@ export default function Sidebar() {
   ];
 
   const clienteLinks = [
-    { name: 'Mis Facturas', href: '/facturas', icon: <ReceiptIcon /> },
-    { name: 'Mis Órdenes', href: '/ordenes', icon: <ShoppingCartIcon /> },
+    { name: 'Mis Facturas', href: '/dashboard/cliente/facturas', icon: <ReceiptIcon /> },
+    { name: 'Mis Órdenes', href: '/dashboard/cliente/ordenes', icon: <ShoppingCartIcon /> },
   ];
 
   const cajeroLinks = [
-    { name: 'Ver Facturas', href: '/facturas', icon: <ReceiptIcon /> },
-    { name: 'Cobranza', href: '/cobranzas', icon: <LocalAtmIcon /> },
+    { name: 'Ver Facturas', href: '/dashboard/cajero/facturas', icon: <ReceiptIcon /> },
+    { name: 'Cobranza', href: '/dashboard/cajero/cobranzas', icon: <LocalAtmIcon /> },
   ];
 
   const personalDeComprasLinks = [
