@@ -1,18 +1,10 @@
-'use client';
-
-import Sidebar from '@/components/Sidebar';
-import AuthGuard from '@/components/AuthGuard';
-
 export default function AdminDashboard() {
   return (
-    <AuthGuard allowedRoles={['admin']}>
       <div className="flex">
-        <Sidebar />
         <main className="flex-1 p-6">
           <h1 className="text-3xl font-bold mb-4">Bienvenido Administrador</h1>
           <p>Desde aquí podés gestionar productos, clientes, proveedores y más.</p>
         </main>
       </div>
-    </AuthGuard>
   );
 }

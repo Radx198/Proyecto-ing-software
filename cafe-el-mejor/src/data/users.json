@@ -10,5 +10,11 @@
     "username": "cliente1",
     "password": "cliente123",
     "role": "cliente"
+  },
+  {
+    "id": 3,
+    "username": "cajero",
+    "password": "cajero123",
+    "role": "cajero"
   }
 ]
