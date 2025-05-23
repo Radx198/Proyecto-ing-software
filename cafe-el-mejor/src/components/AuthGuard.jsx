@@ -5,26 +5,30 @@ import { useRouter } from 'next/navigation';
 import { getSession } from '@/utils/auth';
 
 export default function AuthGuard({ children, allowedRoles = [] }) {
-  const [isAllowed, setIsAllowed] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const session = getSession();
+    async function fetchSession() {
+      const session = await getSession();
 
-    if (!session) {
-      router.push('/login');
-      return;
+    /* if (!session || !session.token) {
+        router.replace('/login');
+        return;
+      }
+
+      if (allowedRoles.length > 0 && !allowedRoles.includes(session.usuario?.role)) {
+        router.replace('/unauthorized');
+        return;
+      }*/
+
+      setLoading(false);
     }
 
-    if (allowedRoles.length && !allowedRoles.includes(session.role)) {
-      router.push('/unauthorized');
-      return;
-    }
+    fetchSession();
+  }, [router, allowedRoles]);
 
-    setIsAllowed(true);
-  }, [allowedRoles, router]);
+  if (loading) return <p className="p-4">Verificando acceso...</p>;
 
-  if (!isAllowed) return null; // O podés mostrar un spinner de carga
-
-  return <>{children}</>;
+  return children;
 }

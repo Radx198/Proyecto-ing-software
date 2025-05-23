@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { loginUser } from '@/utils/auth';
 
-export default function LoginPage() {
+export default function Page() {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,21 +15,15 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mail, contraseña: password }),
-    });
+    const user = await loginUser(mail, password);
 
-    if (res.ok) {
-      const user = await res.json();
+    if (user) {
       if (user.role === 'admin') router.push('/dashboard/admin');
       else if (user.role === 'cajero') router.push('/dashboard/cajero');
       else if (user.role === 'personalDeCompra') router.push('/dashboard/compras');
       else router.push('/dashboard/cliente');
     } else {
-      const data = await res.json();
-      setError(data.message || 'Credenciales inválidas');
+      setError('Credenciales inválidas');
     }
   };
 

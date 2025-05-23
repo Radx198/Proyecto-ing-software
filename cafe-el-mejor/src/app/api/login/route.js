@@ -30,15 +30,15 @@ export async function POST(request) {
     { expiresIn: '7d' }
   );
 
-  return NextResponse.json({
-    message: 'Login exitoso',
-    token,
-    usuario: {
-      id: usuario._id,
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      mail: usuario.mail,
-      role: usuario.role,
-    },
+  const response = NextResponse.json({ message: 'Login exitoso' });
+
+  response.cookies.set('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 días
   });
+
+  return response;
 }

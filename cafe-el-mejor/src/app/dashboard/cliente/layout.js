@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar";
+import AuthGuard from "@/components/AuthGuard";
 
 export const metadata = {
   title: "Dashboard",
@@ -7,9 +7,8 @@ export const metadata = {
 
 export default function Layout({ children }) {
   return (
-    <main className="flex">
-      <Sidebar />
+    <AuthGuard allowedRoles={["cliente"]}>
       {children}
-    </main>
+    </AuthGuard>
   );
 }

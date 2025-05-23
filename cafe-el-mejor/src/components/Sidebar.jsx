@@ -15,17 +15,19 @@ import { getSession, logoutUser } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+
 export default function Sidebar() {
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const s = getSession();
-    if (!s) {
-      router.push('/login');
-    } else {
-      setSession(s);
+    async function fetchSession() {
+      const s = await getSession();
+      if (!s) router.push('/login');
+      else setSession(s);
     }
+    fetchSession();
   }, []);
 
   const handleLogout = () => {
@@ -57,7 +59,7 @@ export default function Sidebar() {
     { name: 'Cobranza', href: '/dashboard/cajero/cobranzas', icon: <LocalAtmIcon /> },
   ];
 
-  const personalDeComprasLinks = [
+  const personalDeCompraLinks = [
     { name: 'Proveedores', href: '/facturas', icon: <StoreIcon /> },
   ];
 
@@ -67,7 +69,7 @@ export default function Sidebar() {
     admin: adminLinks,
     cliente: clienteLinks,
     cajero: cajeroLinks,
-    personalDeCompras: personalDeComprasLinks,
+    personalDeCompra: personalDeCompraLinks,
   };
 
   const linksToShow = [...commonLinks, ...(linksByRole[session.role] || [])];

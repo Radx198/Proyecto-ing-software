@@ -1,20 +1,33 @@
-import users from '../data/users.json';
+export async function loginUser(mail, contraseña) {
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mail, contraseña }),
+    credentials: 'include',
+  });
 
-export function loginUser(username, password) {
-  const user = users.find(u => u.username === username && u.password === password);
-  if (user) {
-    localStorage.setItem('session', JSON.stringify(user));
-    return user;
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.error || 'Error al iniciar sesión');
   }
-  return null;
+
+  return true;
 }
 
-export function getSession() {
-  if (typeof window === "undefined") return null;
-  return JSON.parse(localStorage.getItem('session'));
+export async function getSession() {
+  const res = await fetch('/api/session', {
+    credentials: 'include',
+  });
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  return data.usuario || null;
 }
 
-export function logoutUser() {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem('session');
+export async function logoutUser() {
+  await fetch('/api/logout', {
+    method: 'POST',
+    credentials: 'include',
+  });
 }
