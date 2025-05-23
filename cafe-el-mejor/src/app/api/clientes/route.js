@@ -8,8 +8,15 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const data = await request.json();
   await connectDB();
+  const data = await request.json();
+
+  const clienteExistente = await Cliente.findOne({ mail: data.mail });
+
+  if (clienteExistente) {
+    return Response.json({ error: 'Ya existe un cliente con este mail' }, { status: 400 });
+  }
+
   const nuevo = await Cliente.create(data);
   return Response.json(nuevo);
 }

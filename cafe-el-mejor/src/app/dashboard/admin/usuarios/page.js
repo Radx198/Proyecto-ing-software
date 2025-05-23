@@ -2,9 +2,18 @@
 
 import Link from 'next/link';
 import { useUsuarios } from '@/hooks/useUsuarios';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
-  const { usuarios, loading, deleteUsuario } = useUsuarios();
+  const [query, setQuery] = useState('');
+  const { usuarios, loading, deleteUsuario, fetchUsuarios } = useUsuarios();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchUsuarios(query); // actualiza resultados según búsqueda
+    }, 300); // debounce 300ms
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-5xl mx-auto flex-1">
@@ -14,6 +23,14 @@ export default function Page() {
           Registrar Usuario
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por nombre, apellido o mail..."
+        className="mb-4 p-2 border w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       {loading ? (
         <p>Cargando...</p>

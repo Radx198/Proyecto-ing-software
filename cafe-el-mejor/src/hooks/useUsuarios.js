@@ -6,10 +6,11 @@ export function useUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchUsuarios = async () => {
+  const fetchUsuarios = async (query = '') => {
     try {
       setLoading(true);
-      const res = await fetch('/api/usuarios');
+
+      const res = await fetch(`/api/usuarios${query ? `?q=${query}` : ''}`);
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -26,6 +27,7 @@ export function useUsuarios() {
     }
   };
 
+
   const deleteUsuario = async (id) => {
     await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
     fetchUsuarios();
@@ -33,5 +35,6 @@ export function useUsuarios() {
 
   useEffect(() => { fetchUsuarios(); }, []);
 
-  return { usuarios, loading, deleteUsuario };
+  return { usuarios, loading, deleteUsuario, fetchUsuarios };
 }
+
