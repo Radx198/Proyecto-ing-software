@@ -3,6 +3,7 @@
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PeopleIcon from '@mui/icons-material/People';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -43,6 +44,7 @@ export default function Sidebar() {
     { name: 'Cobranzas', href: '/dashboard/admin/cobranzas', icon: <LocalAtmIcon /> },
     { name: 'Órdenes', href: '/dashboard/admin/ordenes', icon: <ShoppingCartIcon /> },
     { name: 'Proveedores', href: '/dashboard/admin/proveedores', icon: <StoreIcon /> },
+    { name: 'Usuarios', href: '/dashboard/admin/usuarios', icon: <PersonOutlineIcon /> },
   ];
 
   const clienteLinks = [

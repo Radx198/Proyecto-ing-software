@@ -41,3 +41,10 @@ export async function POST(request) {
 
   return NextResponse.json(nuevoUsuario);
 }
+
+
+export async function GET() {
+  await connectDB();
+  const usuarios = await Usuario.find().sort({ createdAt: -1 });
+  return Response.json(usuarios);
+}

@@ -1,19 +1,13 @@
 import mongoose from 'mongoose';
 
-const UsuarioSchema = new mongoose.Schema({
+const ClienteSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   apellido: { type: String, required: true },
-  contraseña: {type: String, required: true },
-  mail: { type: String, required: true },
-  telefono: { type: String, required: true },
-  direccion: { type: String, required: true },
-  role: {
-    type: String,
-    enum: ['admin', 'cliente', 'cajero', 'personalDeCompra', 'invitado'],
-    required: true
-  }
+  email: { type: String, required: true },
+  telefono: String,
+  direccion: String,
 }, {
   timestamps: true
 });
 
-export default mongoose.models.Usuario || mongoose.model('Usuario', UsuarioSchema);
+export default mongoose.models.Cliente || mongoose.model('Cliente', ClienteSchema);

@@ -70,7 +70,6 @@ export default function RegistroPage() {
         });
       }
 
-      // Auto-login simulado: guardar en localStorage
       localStorage.setItem('session', JSON.stringify({
         id: usuarioCreado._id,
         role: usuarioCreado.role,

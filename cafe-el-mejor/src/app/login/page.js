@@ -60,9 +60,11 @@ export default function LoginPage() {
           <button type="submit" className="hover:bg-lightgreen hover:text-neutral-950 bg-darkgreen text-white px-4 py-2 rounded w-full">
             Ingresar
           </button>
-          <p className="text-darkgreen px-4 py-2 w-full">
-            Recuperar usuario/contraseña
-          </p>
+        </div>
+        <div className='mt-2'>
+          <Link href={"/registro"} className="text-darkgreen py-2 w-full">
+            ¿No tenes cuenta? Registrarse
+          </Link>
         </div>
       </form>
     </div>
