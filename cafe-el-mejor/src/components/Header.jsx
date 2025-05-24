@@ -1,27 +1,26 @@
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="w-full px-6 py-4 shadow-lg">
-      <div className="flex max-w-6xl m-auto justify-between items-center  ">
-        <div className="flex max-w-6xl items-center gap-4">
-          <Link href={"/"}>
-            <Image src="/logo.png" className="w-18 h-18" alt="Logo" width={1024} height={1024} />
-          </Link>
-          <nav className="flex gap-4 font-semibold">
-            <Link href="/menu">MENU</Link>
-            <Link href="/cafe">CAFÉ</Link>
-            <Link href="#">EXPERIENCIA CAFÉ EL MEJOR</Link>
-          </nav>
+      <header className="text-xs sm:text-sm w-full px-2 sm:px-6 py-4 shadow-lg">
+        <div className="flex max-w-6xl m-auto justify-between items-center  ">
+          <div className="flex max-w-6xl items-center gap-2 sm:gap-4">
+            <Link href={"/"}>
+              <Image src="/logo.png" className="sm:w-18 sm:h-18 w-12 h-12 aspect-square" alt="Logo" width={1024} height={1024} />
+            </Link>
+            <nav className="flex gap-4 font-semibold">
+              <Link href="/menu">MENU</Link>
+              <Link href="/cafe">CAFÉ</Link>
+              <Link href="/experiencia">EXPERIENCIA</Link>
+            </nav>
+          </div>
+          <div className="">
+            <Link href="/login" className="flex items-center gap-1">
+              Iniciar sesión
+            </Link>
+          </div>
         </div>
-        <div className="">
-          <Link href="/login" className="flex items-center gap-1">
-            Iniciar sesión
-          </Link>
-        </div>
-      </div>
-    </header>
+      </header>
   )
 }

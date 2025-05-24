@@ -6,9 +6,9 @@ export async function POST(request) {
   await connectDB();
   const data = await request.json();
 
-  const { cliente, productos, metodoDePago } = data;
+  const { identificacion, cliente, monto, metodoDePago } = data;
 
-  if (!cliente || !productos || productos.length === 0 || !metodoDePago) {
+  if (!cliente || !monto || !identificacion || !metodoDePago) {
     return Response.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
   }
 
@@ -18,10 +18,11 @@ export async function POST(request) {
   }
 
   const nuevaFactura = await Factura.create({
-    cliente,
-    productos: productosProcesados,
+    identificacion,
     metodoDePago,
-    precioTotal
+    cliente,
+    fecha: new Date(),
+    monto
   });
 
   return Response.json(nuevaFactura);
@@ -31,7 +32,7 @@ export async function GET() {
   try {
     await connectDB();
     const facturas = await Factura.find()
-      .populate('cliente') // si querés mostrar info del cliente
+      .populate('cliente')
       .sort({ createdAt: -1 });
 
     return Response.json(facturas);

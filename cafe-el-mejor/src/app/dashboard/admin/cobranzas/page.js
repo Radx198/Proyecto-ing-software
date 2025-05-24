@@ -24,7 +24,7 @@ export default function Page() {
         <p className="italic text-gray-500">No se encontraron cobranzas.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="hidden sm:block w-max mx-auto border border-gray-200 text-sm backdrop-blur-sm">
+          <table className="w-full hidden sm:block w-max mx-auto border border-gray-200 text-sm backdrop-blur-sm">
             <thead className="bg-gray-100 text-left">
               <tr>
                 <th className="px-4 py-2 text-center">Ticket N°</th>
@@ -87,13 +87,13 @@ export default function Page() {
               ))}
             </tbody>
           </table>
-          <div className="sm:hidden flex flex-col gap-4 text-xs ">
+          <div className="sm:hidden flex flex-col gap-4 text-xs bg-white">
             {cobranzas.map((cobranza, index) => (
               <details
                 key={cobranza._id}
-                className="backdrop-blur-sm border border-gray-300 rounded-md p-3"
+                className="border border-gray-300 rounded-md p-3"
               >
-                <summary className="backdrop-blur-sm flex justify-between items-center cursor-pointer font-medium text-darkgreen">
+                <summary className="flex justify-between items-center cursor-pointer font-medium text-darkgreen">
                   <span>Ticket #{cobranza._id}</span>
                   <span className="text-right font-bold text-gray-800">${cobranza.monto.toFixed(2)}</span>
                 </summary>

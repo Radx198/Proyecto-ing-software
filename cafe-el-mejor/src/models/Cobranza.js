@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const CobranzaSchema = new mongoose.Schema({
   metodoDePago: {
     type: String,
-    enum: ['efectivo', 'tarjeta', 'transferencia', 'mercadoPago'],
+    enum: ['efectivo', 'tarjeta', 'debito', 'transferencia', 'mercadoPago'],
     required: true
   },
   cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },

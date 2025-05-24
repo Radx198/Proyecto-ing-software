@@ -1,5 +1,6 @@
 import { connectDB } from '@/lib/mongoose';
 import Cobranza from '@/models/Cobranza';
+import Producto from '@/models/Producto';
 
 export async function GET() {
   await connectDB();

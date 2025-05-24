@@ -20,7 +20,7 @@ export default function Page() {
         <p className="text-gray-600 italic">No hay clientes registrados.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="hidden sm:block w-max mx-auto border border-gray-200 text-sm backdrop-blur-sm">
+          <table className="w-full hidden sm:block w-max mx-auto border border-gray-200 text-sm backdrop-blur-sm">
             <thead className="bg-gray-100 text-left">
               <tr>
                 <th className="px-4 py-2">Nombre</th>
