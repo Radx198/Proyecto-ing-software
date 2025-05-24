@@ -14,6 +14,8 @@ Este es un sistema de gestión web construido con **Next.js 15**, **JavaScript**
 - Rutas protegidas con AuthGuard
 - MongoDB como base de datos
 - Mongoose para conectar la DB con Next
+- JWT para los tokens de sesion
+- Persistencia de sesion con cookies
 
 ---
 
@@ -37,7 +39,9 @@ cd cafe-el-mejor
 2. Crear un archivo .env.local:
 
 ```.env.local
-MONGODB_URI="URI_MONGODB"
+MONGODB_URI="MONGODB_URI"
+JWT_SECRET="pedir acceso"
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 3. Para levantar el entorno ejecutar:
 
@@ -48,19 +52,14 @@ npm run dev
 Deberías poder navegar por el proyecto en: http://localhost:3000
 
 ## Acceso
-La autentificación está simulada y los usuarios estan hardcodeados en /data/usuarios.json
+La autentificación está implementada con jwt y sesiones con cookies
 
 admin → acceso completo
 
-usuario: admin
-
-contraseña: admin123
-
-cliente → acceso limitado (por implementar)
+cliente → acceso a Mis facturas, Mis Cobranzas
 
 ## Funcionalidades ya implementadas
 Autenticación
-Simulado
 
 AuthGuard: usado como wrapper para proteger las rutas.
 
@@ -72,7 +71,7 @@ Productos
 Clientes
 - [x]  CRUD
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 ## Funcionalidades pendientes por implementar
 🧾 Facturas
@@ -97,7 +96,7 @@ Clientes
 - [ ]  Filtros
 
 🛡 Acceso por rol (parte del cliente)
-- [ ]  Definir vistas y permisos específicos para usuarios tipo cliente
+- [x]  Definir vistas y permisos específicos para usuarios tipo cliente
 
 📁 Estructura del proyecto
 
