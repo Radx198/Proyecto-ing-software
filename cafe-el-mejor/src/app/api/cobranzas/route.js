@@ -3,7 +3,10 @@ import Cobranza from '@/models/Cobranza';
 
 export async function GET() {
   await connectDB();
-  const cobranzas = await Cobranza.find().sort({ createdAt: -1 });
+  const cobranzas = await Cobranza.find().sort({ createdAt: -1 })
+  .populate('cliente', 'nombre apellido email')
+  .populate('productos.producto', 'nombre precio')
+  .exec();
   return Response.json(cobranzas);
 }
 

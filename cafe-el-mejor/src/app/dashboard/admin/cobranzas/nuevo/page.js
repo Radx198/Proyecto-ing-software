@@ -14,12 +14,11 @@ export default function Page() {
 
   const router = useRouter();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async (data) => {
     await fetch('/api/cobranzas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, fecha: new Date(form.fecha) }),
+      body: JSON.stringify({ ...data, fecha: new Date(data.fecha) }),
     });
     router.push('/dashboard/admin/cobranzas');
   };

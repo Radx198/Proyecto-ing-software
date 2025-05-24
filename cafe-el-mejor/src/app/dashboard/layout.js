@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function Layout({ children }) {
   return (
-    <main className="flex">
+    <main className="flex min-h-screen text-xs sm:text-sm">
       <Sidebar />
       {children}
     </main>

@@ -16,10 +16,10 @@ export default function Page() {
   }, [query]);
 
   return (
-    <main className="p-4 max-w-5xl mx-auto flex-1">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">Productos Registrados</h1>
-        <Link href="/dashboard/admin/productos/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded">
+    <main className="p-4 max-w-6xl mx-auto flex-1">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <h1 className="text-2xl font-bold text-center sm:text-left">Productos Registrados</h1>
+        <Link href="/dashboard/admin/productos/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded hover:bg-green-800 transition">
           Registrar Producto
         </Link>
       </div>
@@ -27,45 +27,46 @@ export default function Page() {
       <input
         type="text"
         placeholder="Buscar por nombre del producto..."
-        className="mb-4 p-2 border w-full"
+        className="mb-6 p-2 border rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
 
       {loading ? (
         <p>Cargando...</p>
+      ) : productos.length === 0 ? (
+        <p>No se encontraron productos.</p>
       ) : (
-        <table className="w-full border text-sm">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2">Nombre</th>
-              <th className="p-2">Descripción</th>
-              <th className="p-2">Precio</th>
-              <th className="p-2">Stock</th>
-              <th className="p-2">Categoría</th>
-              <th className="p-2">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {productos.map((producto) => (
-              <tr key={producto._id} className="border-t">
-                <td className="p-2">{producto.nombre}</td>
-                <td className="p-2">{producto.descripcion}</td>
-                <td className="p-2">${producto.precio}</td>
-                <td className="p-2">{producto.stock}</td>
-                <td className="p-2">{producto.categoria}</td>
-                <td className="p-2 space-x-2">
-                  <Link href={`/dashboard/admin/productos/editar/${producto._id}`} className="text-blue-600 underline">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          {productos.map((producto) => (
+            <div key={producto._id} className="bg-white border border-gray-400 rounded-lg shadow hover:shadow-lg transition">
+              <div className="h-40 bg-darkgreen flex items-center justify-center rounded-t-lg">
+                {/* Imagen del producto o placeholder */}
+                <span className="text-white text-lg font-bold">{producto.nombre}</span>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-gray-700 mb-2">{producto.descripcion}</p>
+                <p className="text-lg font-semibold text-darkgreen mb-1">${producto.precio}</p>
+                <p className="text-sm text-gray-500 mb-2">Stock: {producto.stock}</p>
+                <p className="text-sm text-gray-500 mb-4">Categoría: {producto.categoria}</p>
+                <div className="flex justify-between">
+                  <Link
+                    href={`/dashboard/admin/productos/editar/${producto._id}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
                     Editar
                   </Link>
-                  <button onClick={() => deleteProducto(producto._id)} className="text-red-600">
+                  <button
+                    onClick={() => deleteProducto(producto._id)}
+                    className="text-red-600 text-sm hover:underline"
+                  >
                     Eliminar
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </main>
   );

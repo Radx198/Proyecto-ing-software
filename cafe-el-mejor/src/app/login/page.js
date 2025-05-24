@@ -28,11 +28,11 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex lg:items-start items-center justify-start bg-gray-100 max-h-screen overflow-hidden">
-      <div className='flex-1 hidden lg:block'>
-        <Image alt='' width={4016} height={6016} src={"/pexels-chevanon-302896.jpg"} />
+    <div className="min-h-screen flex flex-col justify-start items-center bg-gray-100 max-h-screen overflow-hidden">
+      <div className=''>
+        <Image priority alt='' className='max-w-sm' width={1024} height={1024} src={"/logo.png"} />
       </div>
-      <form onSubmit={handleLogin} className="p-6 flex-1">
+      <form onSubmit={handleLogin} className="max-w-xl p-6">
         <h2 className="text-xl font-bold mb-4">Iniciar Sesión</h2>
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
         <input

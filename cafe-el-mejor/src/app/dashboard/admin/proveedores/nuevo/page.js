@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [form, setForm] = useState({
-    nombre: '',
+    nombreLegal: '',
     direccionEmpresa: '',
     fechaInicio: '',
     fechaFin: '',
@@ -31,7 +31,7 @@ export default function Page() {
   };
 
   const labels = {
-    nombre: 'Nombre',
+    nombreLegal: 'Nombre',
     direccionEmpresa: 'Dirección de la Empresa',
     fechaInicio: 'Inicio de contrato',
     fechaFin: 'Fin de contrato',

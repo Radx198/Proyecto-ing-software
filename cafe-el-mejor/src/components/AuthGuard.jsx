@@ -11,18 +11,8 @@ export default function AuthGuard({ children, allowedRoles = [] }) {
   useEffect(() => {
     async function fetchSession() {
       const session = await getSession();
-
-    /* if (!session || !session.token) {
-        router.replace('/login');
-        return;
-      }
-
-      if (allowedRoles.length > 0 && !allowedRoles.includes(session.usuario?.role)) {
-        router.replace('/unauthorized');
-        return;
-      }*/
-
       setLoading(false);
+      router.replace('/dashboard/' + session?.role);
     }
 
     fetchSession();
