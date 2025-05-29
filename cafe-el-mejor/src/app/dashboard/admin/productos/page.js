@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 export default function Page() {
   const [query, setQuery] = useState('');
   const { productos, loading, deleteProducto, fetchProductos } = useProductos();
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchProductos(query);
@@ -41,8 +40,13 @@ export default function Page() {
           {productos.map((producto) => (
             <div key={producto._id} className="bg-white border border-gray-400 rounded-lg shadow hover:shadow-lg transition">
               <div className="h-40 bg-darkgreen flex items-center justify-center rounded-t-lg">
-                {/* Imagen del producto o placeholder */}
-                <span className="text-white text-lg font-bold">{producto.nombre}</span>
+                <img
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                  className="w-40 h-40 object-contain mb-3"
+                  loading="lazy"
+                  draggable={false}
+                />
               </div>
               <div className="p-4">
                 <p className="text-sm text-gray-700 mb-2">{producto.descripcion}</p>

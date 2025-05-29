@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
+import { DeleteForever, Edit, WatchLater } from '@mui/icons-material';
 
 export default function FacturasPage() {
   const { facturas, loading, deleteFactura } = useFacturas();
@@ -24,7 +25,7 @@ export default function FacturasPage() {
         <p className="italic text-gray-500">No se encontraron facturas.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full hidden sm:block w-max mx-auto border border-gray-200 text-sm">
+          <table className="backdrop-blur-md w-full hidden sm:block w-max mx-auto border border-gray-200 text-sm">
             <thead className="bg-gray-100 text-left">
               <tr>
                 <th className="px-4 py-2 text-center">Identificación</th>
@@ -60,17 +61,25 @@ export default function FacturasPage() {
                   <td className="px-4 py-2">${factura.monto.toFixed(2)}</td>
 
                   <td className="px-4 py-2 flex justify-center gap-3 whitespace-nowrap items-center">
+                  <div>
+                      <Link
+                        href={`/dashboard/admin/facturas/ver/${factura._id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        <WatchLater />
+                      </Link>
+                    </div>
                     <Link
                       href={`/dashboard/admin/facturas/editar/${factura._id}`}
-                      className="text-blue-600 hover:underline"
+                      className="text-neutral-900 hover:underline"
                     >
-                      Editar
+                      <Edit />
                     </Link>
                     <button
                       onClick={() => deleteFactura(factura._id)}
                       className="text-red-600 hover:underline"
                     >
-                      Eliminar
+                      <DeleteForever />
                     </button>
                   </td>
                 </tr>
@@ -109,13 +118,23 @@ export default function FacturasPage() {
                     <br />
                     <span className="text-xs text-gray-500">{factura.cliente?.email}</span>
                   </div>
-                  <div className="flex justify-end gap-4 pt-2">
-                    <Link
-                      href={`/dashboard/admin/facturas/editar/${factura._id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      Editar
-                    </Link>
+                  <div className="self-center flex items-center justify-center gap-4 pt-2">
+                  <div>
+                      <Link
+                        href={`/dashboard/admin/facturas/ver/${factura._id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        <WatchLater />
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        href={`/dashboard/admin/facturas/editar/${factura._id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        Editar
+                      </Link>
+                    </div>
                     <button
                       onClick={() => deleteFactura(factura._id)}
                       className="text-red-600 hover:underline"

@@ -11,7 +11,10 @@ export default function Home() {
         <div className="flex justify-center flex-1">
           <Image src="/productos.jpg" alt="Productos" width={1332} height={777} />
         </div>
-        <h2 className="text-xl sm:text-3xl font-bold flex-1">CONECCIÓN DE CHOCOLATE Y MACADAMIA</h2>
+        <div className="flex-1">
+          <Link href={'/tienda'} className="text-neutral-200 border-b-transparent border-b hover:border-b-white transition-all hover:text-white text-xl sm:text-3xl font-bold ">COMPRAR EN CAFÉ EL MEJOR</Link>
+        </div>
+
       </section>
       <section className="mt-8 bg-[#d6ede1] text-[#01754a] flex justify-center m-auto max-w-6xl items-center py-16 px-6 text-center">
         <div className="flex-1">

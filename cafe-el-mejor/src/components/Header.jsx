@@ -11,6 +11,7 @@ export default function Header() {
             </Link>
             <nav className="flex gap-4 font-semibold">
               <Link href="/menu">MENU</Link>
+              <Link href="/tienda">TIENDA</Link>
               <Link href="/cafe">CAFÉ</Link>
               <Link href="/experiencia">EXPERIENCIA</Link>
             </nav>
