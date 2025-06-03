@@ -8,7 +8,7 @@ import { useProductos } from "@/hooks/useProductos";
 export default function Page() {
   const { productos, loading } = useProductos();
   return (
-    <div className="font-sans text-gray-800">
+    <div className="font-sans text-gray-800 min-h-screen">
       <Header />
 
       <section className="p-4 m-auto w-full max-w-6xl border-b py-4 mb-6 border-neutral-400">

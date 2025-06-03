@@ -8,12 +8,14 @@ import { useProductos } from "@/hooks/useProductos";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Add, Remove } from "@mui/icons-material";
+import { getSession } from "@/utils/auth";
 
 export default function Page() {
   const [producto, setProducto] = useState(null);
   const { productos, loading } = useProductos();
   const params = useParams();
   const [cantidad, setCantidad] = useState(0);
+  const session = getSession();
 
   useEffect(() => {
     if (!loading && productos.length > 0 && params._id) {
@@ -38,7 +40,7 @@ export default function Page() {
   }
 
   return (
-    <main className="font-sans text-gray-800 ">
+    <main className="font-sans text-gray-800 min-h-screen">
       <Header />
 
       <section className="">
@@ -89,16 +91,31 @@ export default function Page() {
                     </button>
                   </div>
                 </div>
-                <div className="self-end py-2">
-                  {producto.stock > 0 ?
-                    <button className="w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
-                      Agregar al carrito
-                    </button> :
-                    <button disabled className="cursor-not-allowed w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
-                      No hay stock
-                    </button>
-                  }
-                </div>
+                {session !== null ?
+                  <div className="self-end py-2">
+                    {producto.stock > 0 ?
+                      <button className="w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
+                        Inicia sesión para comprar
+                      </button>
+                      :
+                      <button disabled className="cursor-not-allowed w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
+                        No hay stock
+                      </button>
+                    }
+                  </div>
+                  :
+                  <div className="self-end py-2">
+                    {producto.stock > 0 ?
+                      <button className="w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
+                        Agregar al carrito
+                      </button>
+                      :
+                      <button disabled className="cursor-not-allowed w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
+                        No hay stock
+                      </button>
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>
