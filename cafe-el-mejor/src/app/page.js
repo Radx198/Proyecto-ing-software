@@ -12,6 +12,13 @@ export default function Home() {
         <div className="flex justify-start flex-1 left-0 max-h-96">
           <Image src="/banner.png" alt="Banner" className="object-cover" width={1280} height={853} />
         </div>
+        <div className="max-w-sm sm:max-w-auto hidden text-start absolute sm:flex flex-col items-start justify-start gap-y-2 p-4 sm:bg-neutral-100/10 rounded sm:backdrop-blur-sm">
+          <p className="text-neutral-900 text-xl sm:text-3xl font-bold tracking-tight leading-none">CAFÉ EL MEJOR</p>
+          <p className="text-neutral-800 font-semibold">Ahora nuestro café llega a donde estés, viví la experiencia.</p>
+          <div className="mt-3">
+            <Link href={'/tienda'} className="text-neutral-900 bg-white p-2 transition-all font-semibold">Ir a la tienda</Link>
+          </div>
+        </div>
         <div className="top-0 left-0 sm:hidden max-w-sm sm:max-w-auto text-start absolute flex flex-col items-start justify-start gap-y-2 p-4 sm:bg-neutral-100/10 rounded sm:backdrop-blur-sm">
           <p className="text-neutral-900 text-xl sm:text-3xl font-bold tracking-tight leading-none">CAFÉ EL MEJOR</p>
           <p className="text-neutral-800 font-semibold">Ahora nuestro café llega a donde estés, viví la experiencia.</p>

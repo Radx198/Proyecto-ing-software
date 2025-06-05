@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 export default function EditarCliente() {
   const { id } = useParams();
   const router = useRouter();
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', direccion: '' });
+  const [form, setForm] = useState({ nombre: '', apellido: '', dni: 0, email: '', telefono: '', direccion: '' });
 
   useEffect(() => {
     async function fetchCliente() {
@@ -28,14 +28,14 @@ export default function EditarCliente() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-    router.push('/clientes');
+    router.push('../');
   };
 
   return (
     <main className="p-4 max-w-xl mx-auto">
       <h1 className="text-xl font-bold mb-4">Editar Cliente</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {['nombre', 'apellido', 'email', 'telefono', 'direccion'].map(field => (
+        {['nombre', 'apellido', 'dni', 'email', 'telefono', 'direccion'].map(field => (
           <input
             key={field}
             name={field}
@@ -43,7 +43,7 @@ export default function EditarCliente() {
             placeholder={field}
             value={form[field]}
             onChange={handleChange}
-            required={['nombre', 'apellido', 'email'].includes(field)}
+            required={['nombre', 'apellido', 'email', 'dni'].includes(field)}
             className="w-full p-2 border rounded"
           />
         ))}
