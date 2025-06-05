@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Add, Remove, Warning } from "@mui/icons-material";
 import { useCarrito } from '@/context/CarritoContext';
+import { getSession } from "@/utils/auth";
 
 export default function Page() {
   const [producto, setProducto] = useState(null);
@@ -15,7 +16,7 @@ export default function Page() {
   const [mensaje, setMensaje] = useState('');
   const { productos, loading } = useProductos();
   const params = useParams();
-  const { agregarProducto } = useCarrito();
+  const [cantidad, setCantidad] = useState(0);
 
   useEffect(() => {
     if (!loading && productos.length > 0 && params._id) {
@@ -57,7 +58,7 @@ export default function Page() {
   }
 
   return (
-    <main className="font-sans text-gray-800">
+    <main className="font-sans text-gray-800 ">
       <Header />
 
       <section className="px-4 py-6">
@@ -102,25 +103,16 @@ export default function Page() {
                     </button>
                   </div>
                 </div>
-
                 <div className="self-end py-2">
-                  {producto.stock > 0 ? (
-                    <button
-                      onClick={handleAgregarAlCarrito}
-                      className="w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md"
-                    >
+                  {producto.stock > 0 ?
+                    <button className="w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
                       Agregar al carrito
-                    </button>
-                  ) : (
-                    <button disabled className="cursor-not-allowed w-36 border-neutral-800 p-2 bg-gray-400 text-white rounded-md">
+                    </button> :
+                    <button disabled className="cursor-not-allowed w-36 border-neutral-800 p-2 bg-darkgreen text-white rounded-md">
                       No hay stock
                     </button>
-                  )}
+                  }
                 </div>
-
-                {mensaje && (
-                  <p className="flex items-center justify-center gap-x-2 absolute bottom-10 right-10 bg-white rounded-xl font-semibold text-center text-darkgreen mt-2"><Warning />{mensaje}</p>
-                )}
               </div>
             </div>
           </div>
