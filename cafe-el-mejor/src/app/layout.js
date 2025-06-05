@@ -1,5 +1,6 @@
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
+import { CarritoProvider } from "../context/CarritoContext";
 
 const font = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased`}
       >
-        {children}
+        <CarritoProvider>
+          {children}
+        </CarritoProvider>
       </body>
     </html>
   );

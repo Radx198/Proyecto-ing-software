@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import User from "./User";
 
 export default function Header() {
   return (
@@ -17,9 +18,7 @@ export default function Header() {
             </nav>
           </div>
           <div className="">
-            <Link href="/login" className="flex items-center gap-1">
-              Iniciar sesión
-            </Link>
+            <User />
           </div>
         </div>
       </header>

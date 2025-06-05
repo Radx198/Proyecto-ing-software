@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import LoginButton from "@/components/LoginButton";
 
 export default function Home() {
   return (
@@ -14,16 +15,13 @@ export default function Home() {
         <div className="flex-1">
           <Link href={'/tienda'} className="text-neutral-200 border-b-transparent border-b hover:border-b-white transition-all hover:text-white text-xl sm:text-3xl font-bold ">COMPRAR EN CAFÉ EL MEJOR</Link>
         </div>
-
       </section>
       <section className="mt-8 bg-[#d6ede1] text-[#01754a] flex justify-center m-auto max-w-6xl items-center py-16 px-6 text-center">
         <div className="flex-1">
           <h3 className="text-2xl font-bold ">Ingresar al portal de administración</h3>
           <p className="mt-2 text-sm">Unite a mejorar la experiencia del café</p>
-          <div className="max-w-32 m-auto mt-4 text-sm ">
-            <Link className="hover:bg-[#1e3932] rounded-full  hover:text-white transition px-4 py-2 border border-[#1e3932] " href="/login">
-              Iniciar sesión
-            </Link>
+          <div className="m-auto mt-4 text-sm ">
+            <LoginButton />
           </div>
         </div>
         <div className="flex-1">
