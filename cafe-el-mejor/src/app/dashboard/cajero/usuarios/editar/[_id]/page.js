@@ -6,12 +6,11 @@ import { useParams } from 'next/navigation';
 
 export default function EditarUsuarioPage() {
   const router = useRouter();
-  const { _id } = useParams();
+  const { id } = useParams();
 
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
-    dni: 0,
     mail: '',
     telefono: '',
     direccion: '',
@@ -23,7 +22,7 @@ export default function EditarUsuarioPage() {
   useEffect(() => {
     const fetchUsuario = async () => {
       try {
-        const res = await fetch(`/api/usuarios/${_id}`);
+        const res = await fetch(`/api/usuarios/${id}`);
         const data = await res.json();
         if (res.ok) {
           setForm(data);
@@ -35,8 +34,8 @@ export default function EditarUsuarioPage() {
         setError('No se pudo cargar el usuario');
       }
     };
-    if (_id) fetchUsuario();
-  }, [_id]);
+    if (id) fetchUsuario();
+  }, [id]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,12 +44,12 @@ export default function EditarUsuarioPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.nombre || !form.apellido || !form.dni || !form.mail || !form.telefono || !form.direccion || !form.role) {
+    if (!form.nombre || !form.apellido || !form.mail || !form.telefono || !form.direccion || !form.role) {
       return setError('Todos los campos son obligatorios');
     }
 
     try {
-      const res = await fetch(`/api/usuarios/${_id}`, {
+      const res = await fetch(`/api/usuarios/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -73,7 +72,7 @@ export default function EditarUsuarioPage() {
       {error && <p className="text-red-500">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {['nombre', 'apellido', 'dni', 'mail', 'telefono', 'direccion'].map((field) => (
+        {['nombre', 'apellido', 'mail', 'telefono', 'direccion'].map((field) => (
           <input
             key={field}
             type="text"

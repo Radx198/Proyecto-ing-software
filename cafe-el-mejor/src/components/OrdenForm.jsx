@@ -52,7 +52,7 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
     }
     onSubmit({ cliente, productos, metodoDePago, precioTotal });
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <select
@@ -103,14 +103,18 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
         </button>
       </div>
 
-      <input
-        type="text"
-        placeholder="Método de pago"
+      <select
         className="w-full p-2 border rounded"
         value={metodoDePago}
         onChange={(e) => setMetodoDePago(e.target.value)}
         required
-      />
+      >
+        <option value="">Seleccionar método de pago</option>
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+        <option value="transferencia">Transferencia</option>
+        <option value="mercadoPago">MercadoPago</option>
+      </select>
 
       <div className="w-full p-2 border rounded bg-gray-50">
         <strong>Total:</strong> ${precioTotal.toFixed(2)}

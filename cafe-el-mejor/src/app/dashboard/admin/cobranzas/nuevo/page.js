@@ -25,7 +25,7 @@ export default function Page() {
 
   return (
     <div className="p-4 flex-1">
-      <h1 className="text-xl font-bold mb-4">Registrar Orden de Compra</h1>
+      <h1 className="text-xl font-bold mb-4">Registrar Cobranza</h1>
       <CobranzaForm onSubmit={handleSubmit} />
     </div>
   );

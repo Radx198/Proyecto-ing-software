@@ -11,7 +11,6 @@ export default function CrearUsuarioAdmin() {
     confirmarContraseña: '',
     telefono: '',
     direccion: '',
-    dni: 0,
     role: 'cliente',
   });
   const [error, setError] = useState('');
@@ -52,7 +51,6 @@ export default function CrearUsuarioAdmin() {
       <form onSubmit={handleSubmit} className="space-y-3">
         <input name="nombre" placeholder="Nombre" onChange={handleChange} className="w-full p-2 border rounded" required />
         <input name="apellido" placeholder="Apellido" onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input name="dni" placeholder="DNI" type='number' onChange={handleChange} className="w-full p-2 border rounded" required />
         <input name="mail" placeholder="Email" onChange={handleChange} className="w-full p-2 border rounded" type="email" required />
         <input name="telefono" placeholder="Teléfono" onChange={handleChange} className="w-full p-2 border rounded" required />
         <input name="direccion" placeholder="Dirección" onChange={handleChange} className="w-full p-2 border rounded" required />

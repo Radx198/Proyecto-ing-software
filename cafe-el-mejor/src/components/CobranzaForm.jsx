@@ -8,7 +8,7 @@ export default function CobranzaForm({ initialData = null, onSubmit }) {
   const [cliente, setCliente] = useState(initialData?.cliente || '');
   const [productos, setProductos] = useState(initialData?.productos || []);
   const [metodoDePago, setMetodoDePago] = useState(initialData?.metodoDePago || '');
-  const [fecha, setFecha] = useState(Date.now());
+  const [fecha, setFecha] = useState(initialData?.fecha || Date.now());
   const [monto, setMonto] = useState(0);
 
   useEffect(() => {
@@ -100,14 +100,18 @@ export default function CobranzaForm({ initialData = null, onSubmit }) {
         </button>
       </div>
 
-      <input
-        type="text"
-        placeholder="Método de pago"
+      <select
         className="w-full p-2 border rounded"
         value={metodoDePago}
         onChange={(e) => setMetodoDePago(e.target.value)}
         required
-      />
+      >
+        <option value="">Seleccionar método de pago</option>
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+        <option value="transferencia">Transferencia</option>
+        <option value="mercadoPago">MercadoPago</option>
+      </select>
 
       <div className="w-full p-2 border rounded bg-gray-50">
         <strong>Monto:</strong> ${monto.toFixed(2)}

@@ -7,6 +7,7 @@ const UsuarioSchema = new mongoose.Schema({
   mail: { type: String, required: true },
   telefono: { type: String, required: true },
   direccion: { type: String, required: true },
+  dni: {type: Number },
   role: {
     type: String,
     enum: ['admin', 'cliente', 'cajero', 'personalDeCompra', 'invitado'],

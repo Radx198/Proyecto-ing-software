@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function NuevoCliente() {
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', direccion: '', dni: 0 });
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', direccion: '' });
   const router = useRouter();
 
   const handleChange = e => {

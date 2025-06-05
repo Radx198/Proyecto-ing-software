@@ -2,9 +2,18 @@
 
 import Link from 'next/link';
 import { useOrdenes } from '@/hooks/useOrdenes';
+import { useState, useEffect } from 'react';
 
 export default function OrdenesPage() {
-  const { ordenes, loading, deleteOrden } = useOrdenes();
+  const { ordenes, loading, deleteOrdenDeCompra, fetchOrdenes } = useOrdenes();
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchOrdenes(query);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
@@ -17,6 +26,14 @@ export default function OrdenesPage() {
           Registrar Orden
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por medio de pago..."
+        className="mb-6 p-2 border rounded w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       {loading ? (
         <p className="text-gray-600">Cargando...</p>
@@ -68,7 +85,7 @@ export default function OrdenesPage() {
                       Editar
                     </Link>
                     <button
-                      onClick={() => deleteOrden(orden._id)}
+                      onClick={() => deleteOrdenDeCompra(orden._id)}
                       className="text-red-600 hover:underline"
                     >
                       Eliminar
@@ -117,7 +134,7 @@ export default function OrdenesPage() {
                       Editar
                     </Link>
                     <button
-                      onClick={() => deleteOrden(orden._id)}
+                      onClick={() => deleteOrdenDeCompra(orden._id)}
                       className="text-red-600 hover:underline"
                     >
                       Eliminar

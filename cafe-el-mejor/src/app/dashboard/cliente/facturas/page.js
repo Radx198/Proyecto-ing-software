@@ -2,10 +2,21 @@
 
 import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
-import { DeleteForever, Edit, WatchLater } from '@mui/icons-material';
+import { WatchLater } from '@mui/icons-material';
 
 export default function FacturasPage() {
-  const { facturas, loading, deleteFactura } = useFacturas();
+  const { facturas, loading } = useFacturas();
+    const [session, setSession] = useState(null);
+    useEffect(() => {
+      async function fetchSession() {
+        const s = await getSession();
+        if (!s) {
+          return null
+        }
+        setSession(s)
+      }
+      fetchSession();
+    }, [])
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
@@ -37,48 +48,50 @@ export default function FacturasPage() {
               </tr>
             </thead>
             <tbody>
-              {facturas.map((factura, index) => (
-                <tr key={factura._id} className="border-t hover:bg-gray-50">
+              {facturas.map((factura, index) => ( session._id !== factura.cliente?._id ? 
+              <></>
+              :
+                  <tr key={factura._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-center">{factura.identificacion}</td>
-
+                  
                   <td className="px-4 py-2">
-                    {factura.cliente?.nombre} {factura.cliente?.apellido}
-                    <br />
-                    <span className="text-gray-600 text-xs">{factura.cliente?.email}</span>
+                  {factura.cliente?.nombre} {factura.cliente?.apellido}
+                  <br />
+                  <span className="text-gray-600 text-xs">{factura.cliente?.email}</span>
                   </td>
-
+                  
                   <td className="px-4 py-2 capitalize">
-                    {new Date(factura.fecha).toLocaleString('es-AR', {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    })}
+                  {new Date(factura.fecha).toLocaleString('es-AR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                  })}
                   </td>
                   <td className="px-4 py-2 capitalize">{factura.metodoDePago}</td>
                   <td className="px-4 py-2">${factura.monto.toFixed(2)}</td>
-
+                  
                   <td className="px-4 py-2 flex justify-center gap-3 whitespace-nowrap items-center">
-                    <div>
-                      <Link
-                        href={`/dashboard/admin/facturas/ver/${factura._id}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        <WatchLater />
-                      </Link>
-                    </div>
+                  <div>
+                  <Link
+                  href={`/dashboard/admin/facturas/ver/${factura._id}`}
+                  className="text-blue-600 hover:underline"
+                  >
+                  <WatchLater />
+                  </Link>
+                  </div>
                   </td>
-                </tr>
+                  </tr>
               ))}
-            </tbody>
-          </table>
-          <div className="sm:hidden flex flex-col gap-4 text-xs bg-white">
+                  </tbody>
+                  </table>
+                  <div className="sm:hidden flex flex-col gap-4 text-xs bg-white">
             {facturas.map((factura, index) => (
               <details
-                key={factura._id}
-                className="border border-gray-300 rounded-md p-3"
+              key={factura._id}
+              className="border border-gray-300 rounded-md p-3"
               >
                 <summary className="flex justify-between items-center cursor-pointer font-medium text-darkgreen">
                   <span>{factura.identificacion}</span>
@@ -111,7 +124,7 @@ export default function FacturasPage() {
                       <Link
                         href={`/dashboard/admin/facturas/ver/${factura._id}`}
                         className="text-blue-600 hover:underline"
-                      >
+                        >
                         <WatchLater />
                       </Link>
                     </div>
@@ -122,6 +135,6 @@ export default function FacturasPage() {
           </div>
         </div>
       )}
-    </main>
-  );
+      </main>
+    );
 }

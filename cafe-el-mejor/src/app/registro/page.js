@@ -13,6 +13,7 @@ export default function RegistroPage() {
     contraseña: '',
     confirmarContraseña: '',
     role: 'cliente',
+    dni: 0,
   });
   const [error, setError] = useState('');
   const router = useRouter();
@@ -65,16 +66,11 @@ export default function RegistroPage() {
             mail,
             telefono,
             direccion,
-            usuarioId: usuarioCreado._id
+            usuarioId: usuarioCreado._id,
+            dni
           }),
         });
       }
-
-      localStorage.setItem('session', JSON.stringify({
-        id: usuarioCreado._id,
-        role: usuarioCreado.role,
-        nombre: usuarioCreado.nombre,
-      }));
 
       // Redireccionar
       switch (usuarioCreado.role) {

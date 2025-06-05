@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
-export default function Page() {
+export default function EditarCobranzaPage() {
   const { id } = useParams();
   const router = useRouter();
   const [form, setForm] = useState({
@@ -40,7 +40,7 @@ export default function Page() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...form, fecha: new Date(form.fecha) }),
     });
-    router.push('../');
+    router.push('/cobranzas');
   };
 
   return (
