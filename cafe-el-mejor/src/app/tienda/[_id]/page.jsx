@@ -16,7 +16,6 @@ export default function Page() {
   const [mensaje, setMensaje] = useState('');
   const { productos, loading } = useProductos();
   const params = useParams();
-  const [cantidad, setCantidad] = useState(0);
 
   useEffect(() => {
     if (!loading && productos.length > 0 && params._id) {
