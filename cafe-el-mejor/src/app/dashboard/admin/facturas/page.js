@@ -3,9 +3,17 @@
 import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useState, useEffect } from 'react';
 
 export default function FacturasPage() {
-  const { facturas, loading, deleteFactura } = useFacturas();
+  const { facturas, loading, fetchFacturas } = useFacturas();
+  const [query, setQuery] = useState('');
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchFacturas(query);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
@@ -18,6 +26,14 @@ export default function FacturasPage() {
           Registrar Factura
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por nombre del producto..."
+        className="mb-6 p-2 border rounded w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       {loading ? (
         <p className="text-gray-600">Cargando...</p>

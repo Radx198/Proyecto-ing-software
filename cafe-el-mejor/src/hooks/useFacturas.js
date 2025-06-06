@@ -6,10 +6,10 @@ export function useFacturas() {
   const [facturas, setFacturas] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchFacturas = async () => {
+    const fetchFacturas = async (query = '') => {
     try {
       setLoading(true);
-      const res = await fetch('/api/facturas');
+      const res = await fetch(`/api/facturas${query ? `?q=${query}` : ''}`);
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -33,5 +33,5 @@ export function useFacturas() {
 
   useEffect(() => { fetchFacturas(); }, []);
 
-  return { facturas, loading, deleteOrdenDeCompra };
+  return { facturas, loading, deleteOrdenDeCompra, fetchFacturas };
 }

@@ -1,10 +1,17 @@
 import { connectDB } from '@/lib/mongoose';
 import Cliente from '@/models/Cliente';
+import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req) {
   await connectDB();
-  const clientes = await Cliente.find().sort({ createdAt: -1 });
-  return Response.json(clientes);
+  const { searchParams } = new URL(req.url);
+  const q = searchParams.get('q') || '';
+
+  const clientes = await Cliente.find({
+    nombre: { $regex: q, $options: 'i' }
+  }).sort({ createdAt: -1 });
+
+  return NextResponse.json(clientes);
 }
 
 export async function POST(request) {

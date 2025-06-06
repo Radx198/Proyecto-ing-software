@@ -6,9 +6,9 @@ export function useCobranzas() {
   const [cobranzas, setCobranzas] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchCobranzas = async () => {
+    const fetchCobranzas = async (query = '') => {
     setLoading(true);
-    const res = await fetch('/api/cobranzas');
+    const res = await fetch(`/api/cobranzas${query ? `?q=${query}` : ''}`);
     const data = await res.json();
     setCobranzas(data);
     setLoading(false);
@@ -51,5 +51,6 @@ export function useCobranzas() {
     addCobranza,
     updateCobranza,
     deleteCobranza,
+    fetchCobranzas
   };
 }

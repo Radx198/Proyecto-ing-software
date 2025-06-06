@@ -1,6 +1,7 @@
 import { connectDB } from '@/lib/mongoose';
 import Factura from '@/models/Factura';
 import Cliente from '@/models/Cliente';
+import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   await connectDB();
@@ -28,19 +29,15 @@ export async function POST(request) {
   return Response.json(nuevaFactura);
 }
 
-export async function GET() {
-  try {
-    await connectDB();
-    const facturas = await Factura.find()
-      .populate('cliente')
-      .sort({ createdAt: -1 });
+export async function GET(req) {
+  await connectDB();
+  const { searchParams } = new URL(req.url);
+  const q = searchParams.get('q') || '';
 
-    return Response.json(facturas);
-  } catch (err) {
-    console.error('Error en GET /api/facturas:', err.message);
-    return new Response(JSON.stringify({ error: 'Error al obtener órdenes' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  const facturas = await Factura.find({
+    identificacion: { $regex: q, $options: 'i' }
+  }).populate('cliente')
+    .sort({ createdAt: -1 });;
+
+  return NextResponse.json(facturas);
 }

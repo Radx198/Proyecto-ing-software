@@ -1,9 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { useClientes } from '@/hooks/useClientes';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
-  const { clientes, loading, deleteCliente } = useClientes();
+  const { clientes, loading, deleteCliente, fetchClientes } = useClientes();
+  const [query, setQuery] = useState('');
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchClientes(query);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
@@ -13,6 +21,14 @@ export default function Page() {
           Registrar Cliente
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por nombre del producto..."
+        className="mb-6 p-2 border rounded w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       {loading ? (
         <p className="text-gray-600">Cargando clientes...</p>
