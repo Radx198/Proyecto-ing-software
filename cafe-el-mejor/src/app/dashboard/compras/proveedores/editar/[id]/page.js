@@ -16,7 +16,7 @@ export default function EditarProveedorPage() {
 
   const handleUpdate = (data) => {
     actualizarProveedor(id, data);
-    router.push('/dashboard/admin/proveedores');
+    router.push('/dashboard/compras/proveedores');
   };
 
   if (!proveedor) return <p className="p-4">Cargando proveedor...</p>;

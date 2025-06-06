@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { loginUser } from '@/utils/auth';
-import { useEffect } from 'react';
 
 export default function Page() {
   const [mail, setMail] = useState('');
@@ -23,17 +22,14 @@ const handleLogin = async (e) => {
 
   const response = await loginUser(mail, password);
 
-  if (response.error) {
+  if (response?.error) {
     setError(response.error);
     return;
   }
 
   const user = response;
 
-  if (user.role === 'admin') router.push('/dashboard/admin');
-  else if (user.role === 'cajero') router.push('/dashboard/cajero');
-  else if (user.role === 'personalDeCompra') router.push('/dashboard/compras');
-  else router.push('/dashboard/cliente');
+  router.push('/');
 };
 
 

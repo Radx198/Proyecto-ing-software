@@ -40,7 +40,6 @@ export default function Page() {
             <thead className="bg-gray-100 text-left">
               <tr>
                 <th className="px-4 py-2">Nombre</th>
-                <th className="px-4 py-2">Email</th>
                 <th className="px-4 py-2">Teléfono</th>
                 <th className="px-4 py-2">Dirección</th>
                 <th className="px-4 py-2">Acciones</th>
@@ -50,7 +49,6 @@ export default function Page() {
               {clientes.map((c) => (
                 <tr key={c._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 font-medium">{c.nombre} {c.apellido}</td>
-                  <td className="px-4 py-2">{c.email}</td>
                   <td className="px-4 py-2">
                     {c.telefono || <span className="text-gray-400 italic">No provisto</span>}
                   </td>

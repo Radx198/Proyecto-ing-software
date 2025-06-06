@@ -13,7 +13,7 @@ export default function RegistroPage() {
     contraseña: '',
     confirmarContraseña: '',
     role: 'cliente',
-    dni: 0,
+    dni: '',
   });
   const [error, setError] = useState('');
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function RegistroPage() {
 
     // Validación básica
     const {
-      nombre, apellido, mail, telefono, direccion, contraseña, confirmarContraseña, role
+      nombre, apellido, dni, mail, telefono, direccion, contraseña, confirmarContraseña, role
     } = form;
 
     if (Object.values(form).some(val => val === '')) {
@@ -67,7 +67,8 @@ export default function RegistroPage() {
             telefono,
             direccion,
             usuarioId: usuarioCreado._id,
-            dni
+            dni,
+            role
           }),
         });
       }
@@ -101,7 +102,7 @@ export default function RegistroPage() {
       <form onSubmit={handleSubmit} className="p-6 flex-1">
         <h2 className="text-xl font-bold mb-4">Registro</h2>
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        {['nombre', 'apellido', 'mail', 'telefono', 'direccion'].map((field) => (
+        {['nombre', 'apellido','dni', 'mail', 'telefono', 'direccion'].map((field) => (
           <input
             key={field}
             type="text"

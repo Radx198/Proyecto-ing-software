@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function NuevoCliente() {
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', telefono: '', direccion: '', dni: 0 });
+  const [form, setForm] = useState({ nombre: '', apellido: '', dni: '', telefono: '', direccion: '', });
   const router = useRouter();
 
   const handleChange = e => {
@@ -25,7 +25,7 @@ export default function NuevoCliente() {
     <main className="p-4 max-w-xl mx-auto">
       <h1 className="text-xl font-bold mb-4">Nuevo Cliente</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {['nombre', 'apellido', 'email', 'telefono', 'direccion'].map(field => (
+        {['nombre', 'apellido', 'dni', 'telefono', 'direccion'].map(field => (
           <input
             key={field}
             name={field}
@@ -33,7 +33,7 @@ export default function NuevoCliente() {
             placeholder={field}
             value={form[field]}
             onChange={handleChange}
-            required={['nombre', 'apellido', 'email'].includes(field)}
+            required={['nombre', 'apellido'].includes(field)}
             className="w-full p-2 border rounded"
           />
         ))}
