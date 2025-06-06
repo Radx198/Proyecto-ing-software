@@ -66,7 +66,7 @@ AuthGuard: usado como wrapper para proteger las rutas.
 Productos
 - [x]  CRUD
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 Clientes
 - [x]  CRUD
@@ -77,26 +77,26 @@ Clientes
 🧾 Facturas
 - [x]  CRUD
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 💳 Cobranzas
  Registro con método de pago, cliente y producto
 - [x]  CRUD con metodo de pago
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 📑 Órdenes de compra
 - [x]  CRUD
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 🚚 Proveedores
 - [x]  CRUD con metodo de pago
 - [x]  Listado
-- [ ]  Filtros
+- [x]  Filtros
 
 🛡 Acceso por rol (parte del cliente)
-- [x]  Definir vistas y permisos específicos para usuarios tipo cliente
+- [ ]  Definir vistas y permisos específicos para usuarios tipo cliente
 
 📁 Estructura del proyecto
 
