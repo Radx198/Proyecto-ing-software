@@ -8,10 +8,8 @@ export async function loginUser(mail, contraseña) {
 
   if (!res.ok) {
     const data = await res.json();
-    throw new Error(data.error || 'Error al iniciar sesión');
+    return { error: data.error || 'Credenciales inválidas' };
   }
-
-  return true;
 }
 
 export async function getSession() {

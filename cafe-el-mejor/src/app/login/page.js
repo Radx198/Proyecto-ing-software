@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { loginUser } from '@/utils/auth';
+import { useEffect } from 'react';
 
 export default function Page() {
   const [mail, setMail] = useState('');
@@ -11,21 +12,30 @@ export default function Page() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    const user = await loginUser(mail, password);
+  if (!mail || !password) {
+    setError('Por favor, completá todos los campos');
+    return;
+  }
 
-    if (user) {
-      if (user.role === 'admin') router.push('/dashboard/admin');
-      else if (user.role === 'cajero') router.push('/dashboard/cajero');
-      else if (user.role === 'personalDeCompra') router.push('/dashboard/compras');
-      else router.push('/dashboard/cliente');
-    } else {
-      setError('Credenciales inválidas');
-    }
-  };
+  const response = await loginUser(mail, password);
+
+  if (response.error) {
+    setError(response.error);
+    return;
+  }
+
+  const user = response;
+
+  if (user.role === 'admin') router.push('/dashboard/admin');
+  else if (user.role === 'cajero') router.push('/dashboard/cajero');
+  else if (user.role === 'personalDeCompra') router.push('/dashboard/compras');
+  else router.push('/dashboard/cliente');
+};
+
 
   return (
     <div className="min-h-screen flex flex-col justify-start items-center bg-gray-100 max-h-screen overflow-hidden">
