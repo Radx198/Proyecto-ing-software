@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
-import { DeleteForever, Edit, WatchLater } from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function FacturasPage() {
   const { facturas, loading, deleteFactura } = useFacturas();
@@ -64,9 +64,9 @@ export default function FacturasPage() {
                     <div>
                       <Link
                         href={`/dashboard/admin/facturas/ver/${factura._id}`}
-                        className="text-blue-600 hover:underline"
+                        className="hover:underline"
                       >
-                        <WatchLater />
+                        <VisibilityIcon />
                       </Link>
                     </div>
                   </td>
@@ -112,7 +112,7 @@ export default function FacturasPage() {
                         href={`/dashboard/admin/facturas/ver/${factura._id}`}
                         className="text-blue-600 hover:underline"
                       >
-                        <WatchLater />
+                        <VisibilityIcon />
                       </Link>
                     </div>
                   </div>

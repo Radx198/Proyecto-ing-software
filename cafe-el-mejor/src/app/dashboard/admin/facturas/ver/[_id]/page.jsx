@@ -1,5 +1,6 @@
 import FacturaPage from '@/components/FacturaView';
 
-export default function Page({ params }) {
-  return <FacturaPage facturaId={params._id} />;
+export default async function Page({ params }) {
+  const { _id } = await params
+  return <FacturaPage facturaId={_id} />;
 }

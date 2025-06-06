@@ -11,7 +11,7 @@ export default function Home() {
           ¡Disfrutalos!
         </h2>
         <h1 className="font-bold text-3xl max-w-xl">
-          Conoce nuestras bebidas y alimentos de temporada
+          Conoce nuestras bebidas y alimentos de temporada en nuestras tiendas físicas
         </h1>
       </section>
       <section className="p-4 m-auto w-full max-w-6xl border-b border-t py-4 mb-6 border-neutral-400">

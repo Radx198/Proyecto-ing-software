@@ -2,9 +2,17 @@
 
 import Link from 'next/link';
 import { useProveedores } from '@/hooks/useProveedores';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
-  const { proveedores, loading, deleteProveedor } = useProveedores();
+  const { proveedores, loading, deleteProveedor, fetchProveedores } = useProveedores();
+    const [query, setQuery] = useState('');
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        fetchProveedores(query);
+      }, 300);
+      return () => clearTimeout(timeout);
+    }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto">
@@ -17,6 +25,15 @@ export default function Page() {
           Registrar Proveedor
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por nombre del producto..."
+        className="mb-6 p-2 border rounded w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+
       {loading ? (
         <p className="text-gray-600">Cargando...</p>
       ) : proveedores.length === 0 ? (
@@ -94,7 +111,8 @@ export default function Page() {
                   </div>
                   <div>
                     {new Date(proveedor.fechaUltimaEntrega).toLocaleDateString('es-AR', {
-                      year: 'numeric', day: '2-digit', month: '2-digit',})}
+                      year: 'numeric', day: '2-digit', month: '2-digit',
+                    })}
                   </div>
                   <div>
                     <strong>Productos:</strong>

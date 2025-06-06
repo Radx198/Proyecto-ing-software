@@ -5,9 +5,9 @@ export function useProveedores() {
   const [proveedores, setProveedores] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchProveedores = async () => {
+  const fetchProveedores = async (query = '') => {
     setLoading(true);
-    const res = await fetch('/api/proveedores');
+    const res = await fetch(`/api/proveedores${query ? `?q=${query}` : ''}`);
     const data = await res.json();
     setProveedores(data);
     setLoading(false);
@@ -20,5 +20,5 @@ export function useProveedores() {
 
   useEffect(() => { fetchProveedores(); }, []);
 
-  return { proveedores, loading, deleteProveedor };
+  return { proveedores, loading, deleteProveedor, fetchProveedores };
 }
