@@ -1,3 +1,5 @@
+//api/productos/[id]
+
 import { connectDB } from '@/lib/mongoose';
 import Producto from '@/models/Producto';
 

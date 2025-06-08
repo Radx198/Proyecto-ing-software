@@ -1,3 +1,5 @@
+//api/productos/
+
 import { connectDB } from '@/lib/mongoose';
 import Producto from '@/models/Producto';
 import { NextResponse } from 'next/server';
