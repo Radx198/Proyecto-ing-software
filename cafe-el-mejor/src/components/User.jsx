@@ -33,7 +33,8 @@ export default function User() {
 
   const handleLogout = async () => {
     await logoutUser();
-    router.push("/");
+    router.push('./');
+    location.reload();
   };
 
   return (
@@ -56,8 +57,8 @@ export default function User() {
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 max-w-max bg-white border flex flex-col items-center justify-center border-gray-200 rounded shadow-md z-50">
-                <Link href="/carrito" className="relative">
+              <div className="absolute right-0 mt-2 max-w-64 w-full  bg-white border flex flex-col items-center justify-center border-gray-200 rounded shadow-md z-50">
+                <Link href="/tienda/carrito" className="relative">
                   Ver Carrito <ShoppingBag />
                 </Link>
                 <Link href={`/dashboard/${session.role}`} className="block px-4 py-2 hover:bg-gray-100">

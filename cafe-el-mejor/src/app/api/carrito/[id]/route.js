@@ -19,31 +19,35 @@ export async function PUT(req, { params }) {
   const userId = getUserIdFromToken(req);
   if (!userId) return NextResponse.json({ message: 'No autenticado' }, { status: 401 });
 
-  const { productoId } = params;
   const { cantidad } = await req.json();
 
-  if (cantidad < 0) {
+  const { id: productoId } = params;
+
+  if (cantidad < 1) {
     return NextResponse.json({ message: 'Cantidad inválida' }, { status: 400 });
   }
 
   const carrito = await Carrito.findOne({ usuario: userId });
-  if (!carrito) return NextResponse.json({ message: 'Carrito no encontrado' }, { status: 404 });
 
-  const index = carrito.items.findIndex(item => item.producto.toString() === productoId);
+  if (!carrito) {
+    return NextResponse.json({ message: 'Carrito no encontrado' }, { status: 404 });
+  }
 
-  if (index === -1) {
+  const index = carrito.items.findIndex(item => {
+    const id = typeof item.producto === 'object' ? item.producto._id?.toString?.() : item.producto?.toString?.();
+    return id === productoId;
+  });
+
+  if (index === -1 || !carrito.items[index]) {
     return NextResponse.json({ message: 'Producto no está en el carrito' }, { status: 404 });
   }
 
-  if (cantidad === 0) {
-    carrito.items.splice(index, 1);
-  } else {
-    carrito.items[index].cantidad = cantidad;
-  }
+  // ✅ Actualizar cantidad de forma segura
+  carrito.items[index].cantidad = cantidad;
 
   await carrito.save();
 
-  return NextResponse.json({ message: 'Producto actualizado correctamente' });
+  return NextResponse.json(carrito);
 }
 
 export async function DELETE(req, { params }) {

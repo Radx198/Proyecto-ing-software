@@ -10,13 +10,14 @@ export default function Page() {
     eliminarProducto,
   } = useCarrito();
 
-  if (loading) return <p className="p-4">Cargando carrito...</p>;
+  const items = carrito?.items || [];
 
-  if (!carrito || carrito.items.length === 0) {
+  if (loading) return <p className="p-4">Cargando carrito...</p>;
+  if (items.length === 0) {
     return <p className="p-4 text-gray-600">Tu carrito está vacío</p>;
   }
 
-  const total = carrito.items.reduce(
+  const total = items.reduce(
     (acc, item) => acc + item.producto.precio * item.cantidad,
     0
   );
@@ -25,8 +26,8 @@ export default function Page() {
     <main className="max-w-4xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">Carrito de compras</h1>
 
-      <ul className="space-y-4">
-        {carrito.items.map((item) => (
+      <ul className="space-y-4 min-h-screen">
+        {items.map((item) => (
           <li
             key={item.producto._id}
             className="border border-gray-300 rounded-md p-4 flex flex-col gap-2"
@@ -68,7 +69,7 @@ export default function Page() {
 
       <div className="mt-6 flex justify-between items-center border-t pt-4">
         <p className="text-xl font-bold">Total: ${total.toLocaleString()}</p>
-        <button className="bg-darkgreen text-white px-4 py-2 rounded-md">
+        <button className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800">
           Finalizar compra
         </button>
       </div>

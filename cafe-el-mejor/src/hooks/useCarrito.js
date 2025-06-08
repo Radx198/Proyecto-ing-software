@@ -50,6 +50,7 @@ export function useCarrito() {
   }
 
   return {
+    obtenerCarrito,
     carrito,
     loading,
     agregarProducto,
