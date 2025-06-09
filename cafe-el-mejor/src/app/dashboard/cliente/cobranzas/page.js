@@ -3,28 +3,36 @@
 import Link from 'next/link';
 import { useCobranzas } from '@/hooks/useCobranzas';
 import { useEffect, useState } from 'react';
+import { getSession } from '@/utils/auth';
 
 export default function Page() {
   const { cobranzas, loading, deleteCobranza, fetchCobranzas } = useCobranzas();
   const [query, setQuery] = useState('');
+  const [usuario, setSession] = useState(null);
+
+  useEffect(() => {
+    async function fetchSession() {
+      const usuario = await getSession();
+      setSession(usuario);
+    }
+    fetchSession();
+  }, []);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchCobranzas(query);
     }, 300);
-    console.log(cobranzas)
     return () => clearTimeout(timeout);
   }, [query]);
+
+  const cobranzasFiltradas = usuario
+    ? cobranzas.filter((c) => c.cliente._id === usuario.id)
+    : [];
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold">Cobranzas</h1>
-        <Link
-          href="/dashboard/admin/cobranzas/nuevo"
-          className="bg-darkgreen text-white px-4 py-2 rounded hover:bg-green-800 transition"
-        >
-          Registrar Cobranza
-        </Link>
       </div>
 
       <input
@@ -37,7 +45,7 @@ export default function Page() {
 
       {loading ? (
         <p className="text-gray-600">Cargando...</p>
-      ) : cobranzas.length === 0 ? (
+      ) : cobranzasFiltradas.length === 0 ? (
         <p className="italic text-gray-500">No se encontraron cobranzas.</p>
       ) : (
         <div className="overflow-x-auto">
@@ -54,10 +62,9 @@ export default function Page() {
               </tr>
             </thead>
             <tbody>
-              {cobranzas.map((cobranza, index) => (
+              {cobranzasFiltradas.map((cobranza, index) => (
                 <tr key={cobranza._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-center">{index + 1}</td>
-
                   <td className="px-4 py-2">
                     <ul className="list-disc ml-4">
                       {cobranza.productos.map((item, i) => (
@@ -67,13 +74,11 @@ export default function Page() {
                       ))}
                     </ul>
                   </td>
-
                   <td className="px-4 py-2">
                     {cobranza.cliente?.nombre} {cobranza.cliente?.apellido}
                     <br />
                     <span className="text-gray-600 text-xs">{cobranza.cliente?.email}</span>
                   </td>
-
                   <td className="px-4 py-2 capitalize">{cobranza.metodoDePago}</td>
                   <td className="px-4 py-2">
                     {new Date(cobranza.fecha).toLocaleDateString('es-AR', {
@@ -82,10 +87,7 @@ export default function Page() {
                       day: '2-digit',
                     })}
                   </td>
-
-
                   <td className="px-4 py-2">${cobranza.monto.toFixed(2)}</td>
-
                   <td className="px-4 py-2 flex justify-center gap-3 whitespace-nowrap">
                     <Link
                       href={`/dashboard/admin/cobranzas/editar/${cobranza._id}`}
@@ -104,15 +106,18 @@ export default function Page() {
               ))}
             </tbody>
           </table>
+
           <div className="sm:hidden flex flex-col gap-4 text-xs bg-white">
-            {cobranzas.map((cobranza, index) => (
+            {cobranzasFiltradas.map((cobranza, index) => (
               <details
                 key={cobranza._id}
                 className="border border-gray-300 rounded-md p-3"
               >
                 <summary className="flex justify-between items-center cursor-pointer font-medium text-darkgreen">
                   <span>Ticket #{cobranza._id}</span>
-                  <span className="text-right font-bold text-gray-800">${cobranza.monto.toFixed(2)}</span>
+                  <span className="text-right font-bold text-gray-800">
+                    ${cobranza.monto.toFixed(2)}
+                  </span>
                 </summary>
 
                 <div className="mt-3 text-sm text-gray-700 space-y-2">
@@ -164,7 +169,6 @@ export default function Page() {
               </details>
             ))}
           </div>
-
         </div>
       )}
     </main>
