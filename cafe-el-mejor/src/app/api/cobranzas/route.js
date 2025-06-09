@@ -7,12 +7,16 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q') || '';
 
-  const cobranzas = await Cobranza.find({
-    nombre: { $regex: q, $options: 'i' }
-  })
+  const cobranzasRaw = await Cobranza.find({})
     .populate('cliente', 'nombre apellido email')
     .populate('productos.producto', 'nombre precio')
     .exec();
+
+  const cobranzas = cobranzasRaw.filter(c =>
+    c.productos.some(p =>
+      p.producto?.nombre?.toLowerCase().includes(q.toLowerCase())
+    )
+  );
 
   return NextResponse.json(cobranzas);
 }
