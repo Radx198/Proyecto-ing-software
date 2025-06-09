@@ -11,7 +11,7 @@ export default function Header() {
               <Image src="/logo.png" className="sm:w-18 sm:h-18 w-12 h-12 aspect-square" alt="Logo" width={1024} height={1024} />
             </Link>
             <nav className="flex gap-4 font-semibold">
-              <Link href="/menu">MENU</Link>
+              <Link href="/menu">MENÚ</Link>
               <Link href="/tienda">TIENDA</Link>
               <Link href="/cafe">CAFÉ</Link>
               <Link href="/experiencia">EXPERIENCIA</Link>

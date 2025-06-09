@@ -17,7 +17,10 @@ export default function Page() {
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-        <h1 className="text-2xl font-bold text-center sm:text-left">Productos Disponibles</h1>
+        <h1 className="text-2xl font-bold text-center sm:text-left">Productos Registrados</h1>
+        <Link href="/dashboard/admin/productos/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded hover:bg-green-800 transition">
+          Registrar Producto
+        </Link>
       </div>
 
       <input
@@ -50,6 +53,20 @@ export default function Page() {
                 <p className="text-lg font-semibold text-darkgreen mb-1">${producto.precio}</p>
                 <p className="text-sm text-gray-500 mb-2">Stock: {producto.stock}</p>
                 <p className="text-sm text-gray-500 mb-4">Categoría: {producto.categoria}</p>
+                <div className="flex justify-between">
+                  <Link
+                    href={`/dashboard/admin/productos/editar/${producto._id}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    Editar
+                  </Link>
+                  <button
+                    onClick={() => deleteProducto(producto._id)}
+                    className="text-red-600 text-sm hover:underline"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </div>
           ))}

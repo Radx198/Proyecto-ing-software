@@ -4,56 +4,43 @@ import Link from 'next/link';
 import { useFacturas } from '@/hooks/useFacturas';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useState, useEffect } from 'react';
-import { getSession } from '@/utils/auth';
 
 export default function FacturasPage() {
   const { facturas, loading, fetchFacturas } = useFacturas();
   const [query, setQuery] = useState('');
-  const [session, setSession] = useState(null);
-
   useEffect(() => {
-    async function loadSession() {
-      const ses = await getSession();
-      setSession(ses);
-    }
-
-    loadSession();
-  }, []);
-
-  useEffect(() => {
-    if (session) {
-      const timeout = setTimeout(() => {
-        fetchFacturas(query);
-      }, 300);
-      return () => clearTimeout(timeout);
-    }
-  }, [query, session]);
-
-  const facturasFiltradas = facturas.filter(
-    (factura) => factura.cliente?._id === session?._id
-  );
+    const timeout = setTimeout(() => {
+      fetchFacturas(query);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold">Facturas</h1>
+        <Link
+          href="/dashboard/admin/facturas/nuevo"
+          className="bg-darkgreen text-white px-4 py-2 rounded hover:bg-green-800 transition"
+        >
+          Registrar Factura
+        </Link>
       </div>
 
       <input
         type="text"
-        placeholder="Buscar por número de factura..."
+        placeholder="Buscar por ID de factura..."
         className="mb-6 p-2 border rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {loading || session === null ? (
+      {loading ? (
         <p className="text-gray-600">Cargando...</p>
-      ) : facturasFiltradas.length === 0 ? (
+      ) : facturas.length === 0 ? (
         <p className="italic text-gray-500">No se encontraron facturas.</p>
       ) : (
         <div className="overflow-x-auto">
-          {/* Tabla desktop */}
           <table className="backdrop-blur-md w-full hidden sm:block w-max mx-auto border border-gray-200 text-sm">
             <thead className="bg-gray-100 text-left">
               <tr>
@@ -66,14 +53,16 @@ export default function FacturasPage() {
               </tr>
             </thead>
             <tbody>
-              {facturasFiltradas.map((factura) => (
+              {facturas.map((factura, index) => (
                 <tr key={factura._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-center">{factura.identificacion}</td>
+
                   <td className="px-4 py-2">
                     {factura.cliente?.nombre} {factura.cliente?.apellido}
                     <br />
                     <span className="text-gray-600 text-xs">{factura.cliente?.email}</span>
                   </td>
+
                   <td className="px-4 py-2 capitalize">
                     {new Date(factura.fecha).toLocaleString('es-AR', {
                       year: 'numeric',
@@ -86,22 +75,23 @@ export default function FacturasPage() {
                   </td>
                   <td className="px-4 py-2 capitalize">{factura.metodoDePago}</td>
                   <td className="px-4 py-2">${factura.monto.toFixed(2)}</td>
+
                   <td className="px-4 py-2 flex justify-center gap-3 whitespace-nowrap items-center">
-                    <Link
-                      href={`/dashboard/cliente/facturas/ver/${factura._id}`}
-                      className="hover:underline"
-                    >
-                      <VisibilityIcon />
-                    </Link>
+                    <div>
+                      <Link
+                        href={`/dashboard/admin/facturas/ver/${factura._id}`}
+                        className="hover:underline"
+                      >
+                        <VisibilityIcon />
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          {/* Vista móvil */}
           <div className="sm:hidden flex flex-col gap-4 text-xs bg-white">
-            {facturasFiltradas.map((factura) => (
+            {facturas.map((factura, index) => (
               <details
                 key={factura._id}
                 className="border border-gray-300 rounded-md p-3"
@@ -133,12 +123,14 @@ export default function FacturasPage() {
                     <span className="text-xs text-gray-500">{factura.cliente?.email}</span>
                   </div>
                   <div className="self-center flex items-center justify-center gap-4 pt-2">
-                    <Link
-                      href={`/dashboard/cliente/facturas/ver/${factura._id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      <VisibilityIcon />
-                    </Link>
+                    <div>
+                      <Link
+                        href={`/dashboard/admin/facturas/ver/${factura._id}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        <VisibilityIcon />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </details>

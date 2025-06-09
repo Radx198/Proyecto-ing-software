@@ -2,9 +2,18 @@
 
 import Link from 'next/link';
 import { useCobranzas } from '@/hooks/useCobranzas';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const { cobranzas, loading, deleteCobranza } = useCobranzas();
+  const { cobranzas, loading, deleteCobranza, fetchCobranzas } = useCobranzas();
+  const [query, setQuery] = useState('');
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchCobranzas(query);
+    }, 300);
+    console.log(cobranzas)
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   return (
     <main className="p-4 max-w-6xl mx-auto flex-1">
@@ -17,6 +26,14 @@ export default function Page() {
           Registrar Cobranza
         </Link>
       </div>
+
+      <input
+        type="text"
+        placeholder="Buscar por producto..."
+        className="mb-6 p-2 border rounded w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
       {loading ? (
         <p className="text-gray-600">Cargando...</p>
