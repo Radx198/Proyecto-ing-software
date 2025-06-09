@@ -1,5 +1,7 @@
+'use client';
 import { useState } from 'react';
 import { useCarrito } from '@/context/CarritoContext';
+import { useRouter } from 'next/navigation';
 
 export default function FinalizarCompra({ clienteId }) {
   const { finalizarCompra, carrito } = useCarrito();
@@ -7,6 +9,7 @@ export default function FinalizarCompra({ clienteId }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [exito, setExito] = useState(null);
+  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +23,9 @@ export default function FinalizarCompra({ clienteId }) {
     setLoading(true);
     try {
       const orden = await finalizarCompra(clienteId, metodoDePago);
-      setExito(`Compra realizada! Número de orden: ${orden._id}`);
+      setExito(`¡Compra realizada! Número de orden: ${orden._id}`);
+      router.push(`./checkout/success?msg=${encodeURIComponent(`¡Compra realizada! Número de orden: ${orden._id}`)}`);
+
     } catch (err) {
       setError(err.message);
     } finally {
@@ -29,35 +34,36 @@ export default function FinalizarCompra({ clienteId }) {
   }
 
   if (!carrito || carrito.items.length === 0) {
-    return <p>Tu carrito está vacío</p>;
+    return null;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded shadow space-y-4">
-      <h2 className="text-xl font-bold">Finalizar compra</h2>
+    <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+      <h2 className="text-lg font-semibold">Finalizar compra</h2>
 
-      <label className="block">
-        Método de pago:
+      <label className="block text-sm font-medium text-gray-700">
+        Método de pago
         <select
           value={metodoDePago}
-          onChange={e => setMetodoDePago(e.target.value)}
-          className="mt-1 block w-full border p-2 rounded"
+          onChange={(e) => setMetodoDePago(e.target.value)}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring focus:ring-green-300"
           required
         >
           <option value="">-- Elegí un método --</option>
           <option value="tarjeta">Tarjeta de crédito</option>
+          <option value="debito">Tarjeta de débito</option>
           <option value="mercadoPago">MercadoPago</option>
           <option value="transferencia">Transferencia bancaria</option>
         </select>
       </label>
 
-      {error && <p className="text-red-600">{error}</p>}
-      {exito && <p className="text-green-600">{exito}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
+      {exito && <p className="text-sm text-green-600">{exito}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
+        className="w-full bg-green-600 hover:bg-green-700 text-white text-sm py-2 rounded-md transition disabled:opacity-50"
       >
         {loading ? 'Procesando...' : 'Finalizar compra'}
       </button>

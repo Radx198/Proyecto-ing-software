@@ -1,10 +1,11 @@
 'use client';
-import FinalizarCompra from '@/components/FinalizarCompraForm';
 import { useCarrito } from '@/context/CarritoContext';
 import Header from '@/components/Header';
 import { getSession } from '@/utils/auth';
 import { useEffect, useState } from 'react';
-
+import Link from 'next/link';
+import { ArrowRight, ShoppingBag } from 'lucide-react';
+import { ShoppingBagOutlined } from '@mui/icons-material';
 export default function Page() {
   const [usuario, setSession] = useState(null);
   useEffect(() => {
@@ -25,7 +26,18 @@ export default function Page() {
   if (loading) return <p className="p-4">Cargando carrito...</p>;
 
   if (!carrito || carrito.items.length === 0) {
-    return <p className="p-4 text-gray-600">Tu carrito está vacío</p>;
+    return <>
+      <Header />
+      <main className="max-w-4xl place-items-center flex items-center justify-center flex-col mx-auto px-4 py-6 mt-24 gap-y-8">
+        <h1 className='text-2xl font-bold'>Tu carrito está vacío!</h1>
+        <div className='text-darkgreen'>
+          <ShoppingBag size={'64'} />
+        </div>
+        <div className="mt-3">
+          <Link className="text-neutral-900 bg-white p-2 border rounded-xl hover:bg-lightgreen transition-all font-semibold" href='/tienda'>Ir a la tienda</Link>
+        </div>
+      </main>
+    </>
   }
 
   const total = carrito.items.reduce(
@@ -64,7 +76,7 @@ export default function Page() {
                 </button>
                 <span className="font-medium">{item.cantidad}</span>
                 <button
-                  onClick={() => actualizarCantidad(item.producto._id, item.cantidad + 1)}
+                  onClick={() => {item.cantidad < 10 ? actualizarCantidad(item.producto._id, item.cantidad + 1) : alert('Maximo 10 unidades por producto')}}
                   className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
                 >
                   +
@@ -79,7 +91,13 @@ export default function Page() {
             </li>
           ))}
         </ul>
-        <FinalizarCompra clienteId={usuario.id} />
+        <div className="flex items-center justify-center w-full mt-4 bg-darkgreen hover:bg-green-700 transition-colors text-white text-lg font-medium py-3 rounded-xl shadow-md">
+          <Link className={'w-full'} href={'/tienda/carrito/checkout'}>
+            <p className='w-full flex items-center justify-center gap-x-4'>
+              Finalizar compra <ArrowRight />
+            </p>
+          </Link>
+        </div>
       </main>
     </>
   );

@@ -51,7 +51,6 @@ export default function Page() {
               name={field}
               type={field === 'precio' || field === 'stock' ? 'number' : 'text'}
               placeholder={field}
-              min={field === 'precio' || field === 'stock' ? 1 : undefined}
               value={form[field]}
               onChange={handleChange}
               required={!['descripcion', 'categoria', 'imagen'].includes(field)}

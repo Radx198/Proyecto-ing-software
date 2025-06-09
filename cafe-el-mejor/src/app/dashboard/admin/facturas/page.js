@@ -73,7 +73,7 @@ export default function FacturasPage() {
                       second: '2-digit',
                     })}
                   </td>
-                  <td className="px-4 py-2 capitalize">{factura.metodoDePago}</td>
+                  <td className="px-4 py-2 capitalize">{factura.metodoDePago === 'tarjeta' ? 'Tarjeta de Credito' : factura.metodoDePago}</td>
                   <td className="px-4 py-2">${factura.monto.toFixed(2)}</td>
 
                   <td className="px-4 py-2 flex justify-center gap-3 whitespace-nowrap items-center">

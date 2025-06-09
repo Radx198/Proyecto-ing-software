@@ -3,11 +3,12 @@ import mongoose from 'mongoose';
 const OrdenDeCompraSchema = new mongoose.Schema({
   productos: [
     {
-      producto: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto', required: true },
+      nombre: { type: String, required: true },
       cantidad: { type: Number, required: true },
+      precioUnitario: { type: Number, required: true }
     }
   ],
-  cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
+  proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'Proveedor', required: true },
   precioTotal: { type: Number, required: true },
   metodoDePago: { 
     type: String, 

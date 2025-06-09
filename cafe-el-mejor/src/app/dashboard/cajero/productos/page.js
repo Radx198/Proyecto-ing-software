@@ -18,6 +18,9 @@ export default function Page() {
     <main className="p-4 max-w-6xl mx-auto flex-1">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold text-center sm:text-left">Productos Registrados</h1>
+        <Link href="/dashboard/admin/productos/nuevo" className="bg-darkgreen text-white px-4 py-2 rounded hover:bg-green-800 transition">
+          Registrar Producto
+        </Link>
       </div>
 
       <input
@@ -33,7 +36,7 @@ export default function Page() {
       ) : productos.length === 0 ? (
         <p>No se encontraron productos.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
           {productos.map((producto) => (
             <div key={producto._id} className="bg-white border border-gray-400 rounded-lg shadow hover:shadow-lg transition">
               <div className="h-40 bg-darkgreen flex items-center justify-center rounded-t-lg">
@@ -50,10 +53,19 @@ export default function Page() {
                 <p className="text-lg font-semibold text-darkgreen mb-1">${producto.precio}</p>
                 <p className="text-sm text-gray-500 mb-2">Stock: {producto.stock}</p>
                 <p className="text-sm text-gray-500 mb-4">Categoría: {producto.categoria}</p>
-                <div className="flex justify-end">
-                  <Link className='hover:bg-lightgreen transition-all border rounded-xl border-darkgreen px-3 py-2' href={`/tienda/${producto._id}`}>
-                    Comprar
+                <div className="flex justify-between">
+                  <Link
+                    href={`/dashboard/admin/productos/editar/${producto._id}`}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    Editar
                   </Link>
+                  <button
+                    onClick={() => deleteProducto(producto._id)}
+                    className="text-red-600 text-sm hover:underline"
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             </div>

@@ -36,7 +36,7 @@ export async function GET(req) {
 
   const facturas = await Factura.find({
     identificacion: { $regex: q, $options: 'i' }
-  }).populate('cliente')
+  })    .populate('cliente', 'nombre apellido email usuarioId')
     .sort({ createdAt: -1 });;
 
   return NextResponse.json(facturas);

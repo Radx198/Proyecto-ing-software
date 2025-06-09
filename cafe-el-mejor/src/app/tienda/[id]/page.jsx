@@ -61,77 +61,83 @@ export default function Page() {
 
   return (
     <>
-    <Header />
-    <main className="max-w-5xl mx-auto px-4 py-10">
-      <div className="grid md:grid-cols-2 gap-10 items-start">
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
-          <Image
-            src={producto.imagen}
-            alt={producto.nombre}
-            width={600}
-            height={600}
-            className="w-full h-auto object-cover"
-            priority
+      <Header />
+      <main className="max-w-5xl mx-auto px-4 py-10">
+        <div className="grid md:grid-cols-2 gap-10 items-start">
+          <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
+            <Image
+              src={producto.imagen}
+              alt={producto.nombre}
+              width={600}
+              height={600}
+              className="w-full h-auto object-cover"
+              priority
             />
-        </div>
+          </div>
 
-        <div className="space-y-6">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">
-            {producto.nombre}
-          </h1>
-          <p className="text-gray-600 text-base leading-relaxed">
-            {producto.descripcion}
-          </p>
-          <p className="text-2xl text-darkgreen font-bold">
-            ${producto.precio.toLocaleString()}
-          </p>
+          <div className="space-y-6">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800">
+              {producto.nombre}
+            </h1>
+            <p className="text-gray-600 text-base leading-relaxed">
+              {producto.descripcion}
+            </p>
+            <p className="text-2xl text-darkgreen font-bold">
+              ${producto.precio.toLocaleString()}
+            </p>
 
-          <div className="space-y-4">
-            <label className="flex flex-col font-medium text-gray-700">
-              Cantidad
-              <input
-                type="number"
-                value={cantidad}
-                onChange={(e) =>
-                  setCantidad(Math.max(1, parseInt(e.target.value)))
-                }
-                min={1}
-                className="mt-1 w-24 border border-gray-300 rounded-md px-3 py-2 text-center text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-darkgreen"
+            <div className="space-y-4">
+              <label className="flex flex-col font-medium text-gray-700">
+                Cantidad
+                <input
+                  type="number"
+                  value={cantidad}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (value > 10) {
+                      alert('Máximo 10 productos por ítem');
+                      return;
+                    }
+                    setCantidad(Math.max(1, value));
+                  }}
+                  min={1}
+                  max={10}
+                  className="mt-1 w-24 border border-gray-300 rounded-md px-3 py-2 text-center text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-darkgreen"
                 />
-            </label>
+              </label>
 
-            {!enCarrito ? (
-              <button
-              onClick={() => agregarProducto(producto._id, cantidad)}
-              className="w-full bg-darkgreen hover:bg-green-700 transition-colors text-white text-lg font-medium py-3 rounded-xl shadow-md"
-              >
-                Agregar al carrito
-              </button>
-            ) : (
-              <div className="space-y-3">
-                <p className="text-sm text-gray-500">
-                  Ya en el carrito (cantidad actual: {enCarrito.cantidad})
-                </p>
-                <div className="flex flex-col md:flex-row gap-4">
-                  <button
-                    onClick={() => actualizarCantidad(producto._id, cantidad)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white py-3 rounded-xl shadow-md"
+              {!enCarrito ? (
+                <button
+                  onClick={() => agregarProducto(producto._id, cantidad)}
+                  className="w-full bg-darkgreen hover:bg-green-700 transition-colors text-white text-lg font-medium py-3 rounded-xl shadow-md"
+                >
+                  Agregar al carrito
+                </button>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-sm text-gray-500">
+                    Ya en el carrito (cantidad actual: {enCarrito.cantidad})
+                  </p>
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <button
+                      onClick={() => actualizarCantidad(producto._id, cantidad)}
+                      className="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white py-3 rounded-xl shadow-md"
                     >
-                    Actualizar cantidad
-                  </button>
-                  <button
-                    onClick={() => eliminarProducto(producto._id)}
-                    className="w-full bg-red-600 hover:bg-red-700 transition-colors text-white py-3 rounded-xl shadow-md"
+                      Actualizar cantidad
+                    </button>
+                    <button
+                      onClick={() => eliminarProducto(producto._id)}
+                      className="w-full bg-red-600 hover:bg-red-700 transition-colors text-white py-3 rounded-xl shadow-md"
                     >
-                    Quitar del carrito
-                  </button>
+                      Quitar del carrito
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-            </>
+      </main>
+    </>
   );
 }

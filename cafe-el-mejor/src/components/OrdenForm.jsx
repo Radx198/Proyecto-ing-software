@@ -3,38 +3,30 @@
 import { useEffect, useState } from 'react';
 
 export default function OrdenForm({ initialData = null, onSubmit }) {
-  const [clientes, setClientes] = useState([]);
-  const [productosDisponibles, setProductosDisponibles] = useState([]);
-  const [cliente, setCliente] = useState(initialData?.cliente || '');
+  const [proveedores, setProveedores] = useState([]);
+  const [proveedor, setProveedor] = useState(initialData?.proveedor || '');
   const [productos, setProductos] = useState(initialData?.productos || []);
   const [metodoDePago, setMetodoDePago] = useState(initialData?.metodoDePago || '');
   const [precioTotal, setPrecioTotal] = useState(0);
 
   useEffect(() => {
-    fetch('/api/clientes')
+    fetch('/api/proveedores')
       .then(res => res.json())
-      .then(data => setClientes(data));
-
-    fetch('/api/productos')
-      .then(res => res.json())
-      .then(data => setProductosDisponibles(data));
+      .then(data => setProveedores(data));
   }, []);
 
   useEffect(() => {
-    const total = productos.reduce((acc, item) => {
-      const prod = productosDisponibles.find(p => p._id === item.producto);
-      return acc + (prod ? prod.precio * item.cantidad : 0);
-    }, 0);
+    const total = productos.reduce((acc, item) => acc + (item.precioUnitario || 0) * item.cantidad, 0);
     setPrecioTotal(total);
-  }, [productos, productosDisponibles]);
+  }, [productos]);
 
   const handleAgregarProducto = () => {
-    setProductos([...productos, { producto: '', cantidad: 1 }]);
+    setProductos([...productos, { nombre: '', cantidad: 1, precioUnitario: 0 }]);
   };
 
   const handleProductoChange = (index, field, value) => {
     const nuevos = [...productos];
-    nuevos[index][field] = field === 'cantidad' ? parseInt(value) : value;
+    nuevos[index][field] = field === 'cantidad' || field === 'precioUnitario' ? parseFloat(value) : value;
     setProductos(nuevos);
   };
 
@@ -50,47 +42,70 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
       alert('Debe agregar al menos un producto.');
       return;
     }
-    onSubmit({ cliente, productos, metodoDePago, precioTotal });
+
+    const productosFormateados = productos.map(p => ({
+      nombre: p.nombre,
+      cantidad: p.cantidad,
+      precioUnitario: p.precioUnitario
+    }));
+
+    onSubmit({ proveedor, productos: productosFormateados, metodoDePago, precioTotal });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <select
         className="w-full p-2 border rounded"
-        value={cliente}
-        onChange={(e) => setCliente(e.target.value)}
+        value={proveedor}
+        onChange={(e) => setProveedor(e.target.value)}
         required
       >
-        <option value="">Seleccionar Cliente</option>
-        {clientes.map(c => (
+        <option value="">Seleccionar Proveedor</option>
+        {proveedores.map(c => (
           <option key={c._id} value={c._id}>
-            {c.nombre} {c.apellido} - {c.email}
+            {c.nombreLegal} - {c.contacto}
           </option>
         ))}
       </select>
 
       <div className="space-y-2">
         {productos.map((item, index) => (
-          <div key={index} className="flex gap-2">
-            <select
+          <div key={index} className="flex gap-2 items-center">
+            <label htmlFor='nombre'>
+              Nombre del producto
+            </label>
+            <input
+              type="text"
+              placeholder="Nombre del producto"
               className="flex-1 p-2 border rounded"
-              value={item.producto}
-              onChange={(e) => handleProductoChange(index, 'producto', e.target.value)}
+              value={item.nombre}
+              onChange={(e) => handleProductoChange(index, 'nombre', e.target.value)}
               required
-            >
-              <option value="">Producto</option>
-              {productosDisponibles.map(p => (
-                <option key={p._id} value={p._id}>
-                  {p.nombre} (${p.precio})
-                </option>
-              ))}
-            </select>
+            />
+            <label htmlFor='cantidad'>
+              Cantidad
+            </label>
             <input
               type="number"
               min={1}
+              placeholder="Cantidad"
               className="w-20 p-2 border rounded"
               value={item.cantidad}
               onChange={(e) => handleProductoChange(index, 'cantidad', e.target.value)}
+              required
+            />
+            <label htmlFor='precioUnitario'>
+              Precio unitario
+            </label>
+            $
+            <input
+              type="number"
+              min={0}
+              step={0.01}
+              placeholder="Precio unitario"
+              className="w-24 p-2 border rounded"
+              value={item.precioUnitario}
+              onChange={(e) => handleProductoChange(index, 'precioUnitario', e.target.value)}
               required
             />
             <button type="button" onClick={() => handleEliminarProducto(index)} className="text-red-500 font-bold">
@@ -121,7 +136,7 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
       </div>
 
       <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
-        Guardar Orden
+        Guardar Orden de Compra
       </button>
     </form>
   );

@@ -36,6 +36,9 @@ export function CarritoProvider({ children }) {
   }
 
   async function actualizarCantidad(productoId, cantidad) {
+    if (cantidad > 10) {
+      return
+    }
     const res = await fetch(`/api/carrito/${productoId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -61,7 +64,7 @@ export function CarritoProvider({ children }) {
       cantidad: item.cantidad,
     }));
 
-    const res = await fetch('/api/ordenes', {
+    const res = await fetch('/api/cobranzas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -77,7 +80,6 @@ export function CarritoProvider({ children }) {
       throw new Error(data.error || 'Error al finalizar la compra');
     }
 
-    // Limpiar carrito localmente (podés implementar endpoint para limpiar en backend si querés)
     setCarrito({ items: [] });
 
     return data; // Devuelve la orden creada
