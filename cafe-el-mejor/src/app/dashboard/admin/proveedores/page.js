@@ -28,7 +28,7 @@ export default function Page() {
 
       <input
         type="text"
-        placeholder="Buscar por nombre del producto..."
+        placeholder="Buscar por nombre del proveedor..."
         className="mb-6 p-2 border rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -44,6 +44,7 @@ export default function Page() {
             <thead className="bg-gray-100 text-left">
               <tr>
                 <th className="px-4 py-2">Nombre</th>
+                <th className="px-4 py-2 text-right">Contacto</th>
                 <th className="px-4 py-2 text-right">Dirección</th>
                 <th className="px-4 py-2 text-center">Inicio de Contrato</th>
                 <th className="px-4 py-2 text-center">Fin de Contrato</th>
@@ -56,6 +57,7 @@ export default function Page() {
                 <tr key={proveedor._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2">{proveedor.nombreLegal}</td>
                   <td className="px-4 py-2 text-center">{proveedor.contacto}</td>
+                  <td className="px-4 py-2 text-center">{proveedor.direccionEmpresa}</td>
                   <td className="px-4 py-2 text-center">
                     {proveedor.fechaInicioContrato}
                   </td>

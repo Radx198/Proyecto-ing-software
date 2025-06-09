@@ -29,7 +29,7 @@ export default function Page() {
 
       <input
         type="text"
-        placeholder="Buscar por nombre del producto..."
+        placeholder="Buscar por producto..."
         className="mb-6 p-2 border rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}

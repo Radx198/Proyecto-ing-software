@@ -29,7 +29,7 @@ export default function FacturasPage() {
 
       <input
         type="text"
-        placeholder="Buscar por nombre del producto..."
+        placeholder="Buscar por ID de factura..."
         className="mb-6 p-2 border rounded w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
