@@ -3,61 +3,72 @@ import OrdenDeCompra from '@/models/OrdenDeCompra';
 import Producto from '@/models/Producto';
 import Cliente from '@/models/Cliente';
 import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 
 export async function POST(request) {
   await connectDB();
   const data = await request.json();
-
   const { cliente, productos, metodoDePago } = data;
 
-  if (!cliente || !productos || productos.length === 0 || !metodoDePago) {
-    return Response.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
+  if (!cliente || !productos?.length || !metodoDePago) {
+    return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
   }
 
-  const clienteExistente = await Cliente.findById(cliente);
-  if (!clienteExistente) {
-    return Response.json({ error: 'Cliente no encontrado' }, { status: 404 });
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const clienteExistente = await Cliente.findById(cliente);
+
+    let precioTotal = 0;
+    const productosProcesados = [];
+
+    for (const item of productos) {
+      const producto = await Producto.findById(item.producto).session(session);
+
+      if (!producto) {
+        throw new Error(`Producto no encontrado: ${item.producto}`);
+      }
+
+      if (item.cantidad <= 0) {
+        throw new Error(`Cantidad inválida para ${producto.nombre}`);
+      }
+
+      if (producto.stock < item.cantidad) {
+        throw new Error(`Stock insuficiente para ${producto.nombre} (disponible: ${producto.stock})`);
+      }
+
+      producto.stock -= item.cantidad;
+      await producto.save({ session });
+
+      precioTotal += producto.precio * item.cantidad;
+
+      productosProcesados.push({
+        producto: producto._id,
+        cantidad: item.cantidad,
+      });
+    }
+
+    const nuevaOrden = await OrdenDeCompra.create(
+      [{
+        clienteExistente,
+        productos: productosProcesados,
+        metodoDePago,
+        precioTotal,
+      }],
+      { session }
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return NextResponse.json(nuevaOrden[0]);
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error('Error al finalizar compra:', err.message);
+    return NextResponse.json({ error: err.message }, { status: 400 });
   }
-
-  let precioTotal = 0;
-  const productosProcesados = [];
-
-  for (const item of productos) {
-    const producto = await Producto.findById(item.producto);
-
-    if (!producto) {
-      return Response.json({ error: `Producto no encontrado: ${item.producto}` }, { status: 404 });
-    }
-
-    if (item.cantidad <= 0) {
-      return Response.json({ error: 'Cantidad inválida' }, { status: 400 });
-    }
-
-    if (producto.stock < item.cantidad) {
-      return Response.json({
-        error: `Stock insuficiente para ${producto.nombre} (stock disponible: ${producto.stock})`
-      }, { status: 400 });
-    }
-
-    precioTotal += producto.precio * item.cantidad;
-
-    productosProcesados.push({
-      producto: producto._id,
-      cantidad: item.cantidad
-    });
-
-    producto.stock -= item.cantidad;
-    await producto.save();
-  }
-
-  const nuevaOrden = await OrdenDeCompra.create({
-    cliente,
-    productos: productosProcesados,
-    metodoDePago,
-    precioTotal
-  });
-
-  return Response.json(nuevaOrden);
 }
 
 // export async function GET() {

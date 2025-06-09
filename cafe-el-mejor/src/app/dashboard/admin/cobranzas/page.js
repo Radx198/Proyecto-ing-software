@@ -11,6 +11,7 @@ export default function Page() {
     const timeout = setTimeout(() => {
       fetchCobranzas(query);
     }, 300);
+    console.log(cobranzas)
     return () => clearTimeout(timeout);
   }, [query]);
 

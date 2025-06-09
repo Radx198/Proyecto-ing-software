@@ -60,7 +60,7 @@ export default function Sidebar() {
   const clienteLinks = [
     { name: 'Ver Productos', href: '/dashboard/cliente/productos', icon: <Inventory fontSize="small" /> },
     { name: 'Mis Facturas', href: '/dashboard/cliente/facturas', icon: <Receipt fontSize="small" /> },
-    { name: 'Mis Órdenes', href: '/dashboard/cliente/cobranzas', icon: <ShoppingCart fontSize="small" /> },
+    { name: 'Mis Pagos', href: '/dashboard/cliente/cobranzas', icon: <ShoppingCart fontSize="small" /> },
   ];
 
   const cajeroLinks = [

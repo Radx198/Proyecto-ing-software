@@ -75,8 +75,8 @@ export default function OrdenForm({ initialData = null, onSubmit }) {
             >
                 <option value="">Seleccionar Método de Pago</option>
                 <option value="efectivo">Efectivo</option>
-                <option value="tarjetaDebito">Tarjeta de Débito</option>
-                <option value="tarjetaCredito">Tarjeta de Crédito</option>
+                <option value="debito">Tarjeta de Débito</option>
+                <option value="credito">Tarjeta de Crédito</option>
                 <option value="transferencia">Transferencia Bancaria</option>
                 <option value="mercadoPago">Mercado Pago</option>
             </select>

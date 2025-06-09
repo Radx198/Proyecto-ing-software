@@ -10,10 +10,9 @@ export async function GET(req) {
   const cobranzas = await Cobranza.find({
     nombre: { $regex: q, $options: 'i' }
   })
-    .sort({ createdAt: -1 })
     .populate('cliente', 'nombre apellido email')
     .populate('productos.producto', 'nombre precio')
-    .exec();;
+    .exec();
 
   return NextResponse.json(cobranzas);
 }

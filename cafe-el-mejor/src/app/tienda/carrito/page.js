@@ -1,9 +1,20 @@
 'use client';
-
+import FinalizarCompra from '@/components/FinalizarCompraForm';
 import { useCarrito } from '@/context/CarritoContext';
 import Header from '@/components/Header';
+import { getSession } from '@/utils/auth';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
+  const [usuario, setSession] = useState(null);
+  useEffect(() => {
+    async function fetchSession() {
+      const usuario = await getSession();
+      setSession(usuario);
+      console.log(usuario)
+    }
+    fetchSession();
+  }, [])
   const {
     carrito,
     loading,
@@ -68,13 +79,7 @@ export default function Page() {
             </li>
           ))}
         </ul>
-
-        <div className="mt-6 flex justify-between items-center border-t pt-4">
-          <p className="text-xl font-bold">Total: ${total.toLocaleString()}</p>
-          <button className="bg-darkgreen text-white px-4 py-2 rounded-md">
-            Finalizar compra
-          </button>
-        </div>
+        <FinalizarCompra clienteId={usuario.id} />
       </main>
     </>
   );

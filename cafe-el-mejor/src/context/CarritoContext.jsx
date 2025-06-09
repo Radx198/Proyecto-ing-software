@@ -51,6 +51,39 @@ export function CarritoProvider({ children }) {
     if (res.ok) await obtenerCarrito();
   }
 
+  async function finalizarCompra(clienteId, metodoDePago) {
+    if (!carrito || carrito.items.length === 0) {
+      throw new Error('El carrito está vacío');
+    }
+
+    const productos = carrito.items.map(item => ({
+      producto: item.producto._id,
+      cantidad: item.cantidad,
+    }));
+
+    const res = await fetch('/api/ordenes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cliente: clienteId,
+        productos,
+        metodoDePago,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Error al finalizar la compra');
+    }
+
+    // Limpiar carrito localmente (podés implementar endpoint para limpiar en backend si querés)
+    setCarrito({ items: [] });
+
+    return data; // Devuelve la orden creada
+  }
+
+
   return (
     <CarritoContext.Provider
       value={{
@@ -59,6 +92,7 @@ export function CarritoProvider({ children }) {
         agregarProducto,
         actualizarCantidad,
         eliminarProducto,
+        finalizarCompra
       }}
     >
       {children}
